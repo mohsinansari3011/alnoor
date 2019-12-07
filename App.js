@@ -306,7 +306,7 @@ const DashboardStackNavigator = createStackNavigator(
                 flex:1
         },
         headerTitle: (
-          <Image style={{ width: 220, height: 35 }} source={require('./assets/images/humlogo.png')}/>
+          <Image style={{ width: 220, height: 35 }} source={require('./assets/images/food-logo.png')}/>
       ),
         //title: 'Al-Noor Grocer',
 

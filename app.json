@@ -24,10 +24,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.alnoorgrocer.alnoor"
-    },"android": {
-      "package": "com.alnoorgrocer.alnoor"
+      "supportsTablet": true
     }
   }
 }
