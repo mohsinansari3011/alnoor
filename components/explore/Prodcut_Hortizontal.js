@@ -8,19 +8,10 @@ class Prodcut_Hortizontal extends Component {
         //this.state = {  };
     }
     
- 
-
-    showAlert = (data) =>{
-        Alert.alert(
-            data
-        )
-     }
-
-
     render() {
         return (
         <TouchableOpacity onPress = {()=> {
-            Alert.alert(
+            console.log(
                 this.props.title
              )
     }}>

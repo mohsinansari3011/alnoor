@@ -32,7 +32,7 @@ const { width: screenWidth } = Dimensions.get('window')
 
 import ProductList from '../alnoor/screens/productsList';
 import SingleProduct from '../alnoor/screens/singleProduct';
-
+import Cart from '../alnoor/screens/cart';
 
 class App extends Component {
   render() {
@@ -172,9 +172,7 @@ componentWillMount() {
         position={this.state.position}
         onPositionChanged={position => this.setState({ position })} 
         onPress={index =>
-          Alert.alert(
-            index.image.title
-         )
+          console.log(index.image.title)
           //console.warn(`image ${index} pressed`)
       }/>
 
@@ -213,9 +211,7 @@ componentWillMount() {
       data={DATA}
       renderItem={({ item }) => (
         <TouchableOpacity style={{height:120, marginTop : 2 , backgroundColor: '#F5FCFF',}}  onPress = {()=> {
-          Alert.alert(
-            item.title
-           )
+          console.log(item.title)
         }}>
         <View style={{flex : 2}}>
             <Image source={{ uri: `${item.image}`}} style={{flex:1, width:130, height:null, resizeMode:'cover'}} />
@@ -271,17 +267,7 @@ class Profile extends Component {
     );
   }
 }
-class Cart extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        
-      <Text>This is Cart Page</Text>
-      <Button color="#05a5d1" title="Dashboard" onPress={() => this.props.navigation.navigate("Dashboard")} />
-      </View>
-    );
-  }
-}
+
 
 const DashboardTabNavigator = createBottomTabNavigator(
   {

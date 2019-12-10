@@ -6,7 +6,8 @@ import { CartContext } from '../../context/CartContext';
 
 export default class SingleProduct extends React.Component {
     static navigationOptions = ({ navigation }) => ({
-        title: navigation.state.params.product.name
+        //title: navigation.state.params.product.name
+        title: 'ALNOOR'
     });
 
     constructor(props) {
