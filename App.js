@@ -31,6 +31,8 @@ const { width: screenWidth } = Dimensions.get('window')
 //import TabBarIcon from '../components/TabBarIcon';
 
 import ProductList from '../alnoor/screens/productsList';
+import SingleProduct from '../alnoor/screens/singleProduct';
+
 
 class App extends Component {
   render() {
