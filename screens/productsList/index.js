@@ -7,7 +7,7 @@ import WooApi from '../../components/config/wooapi';
 
 
 
-export default class LinksScreen extends React.Component {
+export default class ProductList extends React.Component {
     static navigationOptions = {
       title: 'Products',
     };
@@ -30,7 +30,7 @@ export default class LinksScreen extends React.Component {
     renderItem = ({item}) => (
       <TouchableOpacity 
         style={styles.listItem} 
-        onPress={() => this.props.navigation.navigate("SingleProduct", { product: item })}
+        onPress={() => this.props.navigation.navigate("Product", { product: item })}
       >
         <View style={styles.view}>
           <Image style={styles.image} source={{ uri: item.images[0].src }} />
@@ -54,7 +54,7 @@ export default class LinksScreen extends React.Component {
             :
             <View style={styles.loaderContainer}>
               <Image
-                source={ require('../assets/images/cart-loading.gif') }
+                source={ require('../../assets/images/cart-loading.gif') }
                 style={styles.loaderImage}
               />
             </View>

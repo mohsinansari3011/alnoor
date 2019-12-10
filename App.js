@@ -178,7 +178,7 @@ componentWillMount() {
 
 
       <View style={{marginTop:5}}>
-      <Button color="#05a5d1" title="View More" onPress={() => this.props.navigation.navigate("ProductList")} />
+      <Button color="#05a5d1" title="View More" onPress={() => this.props.navigation.navigate("Products")} />
       </View>
       <View style={{height : 130, marginTop:5}}>
 
@@ -352,8 +352,11 @@ const AppDrawerNavigator = createDrawerNavigator({
   Cart: {
     screen: Cart
   },
-  ProductList: {
+  Products: {
     screen : ProductList
+  },
+  Product: {
+    screen : SingleProduct
   }
 });
 
