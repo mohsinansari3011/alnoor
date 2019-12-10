@@ -30,6 +30,7 @@ const { width: screenWidth } = Dimensions.get('window')
 
 //import TabBarIcon from '../components/TabBarIcon';
 
+import ProductList from '../alnoor/screens/productsList';
 
 class App extends Component {
   render() {
@@ -176,7 +177,12 @@ componentWillMount() {
       }/>
 
 
+      <View style={{marginTop:5}}>
+      <Button color="#05a5d1" title="View More" onPress={() => this.props.navigation.navigate("ProductList")} />
+      </View>
       <View style={{height : 130, marginTop:5}}>
+
+      
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator ={false}
@@ -345,6 +351,9 @@ const AppDrawerNavigator = createDrawerNavigator({
   },
   Cart: {
     screen: Cart
+  },
+  ProductList: {
+    screen : ProductList
   }
 });
 
