@@ -8,14 +8,27 @@ export default class Cart extends React.Component {
   static navigationOptions = {
     title: 'Cart',
   };
+  
+  state = {
+    subtotal: 0,
+  };
 
 render() {
+
+    const { subtotal } = this.state;
   return (
     <CartContext.Consumer>
         
       {cart => {
-        {console.log(cart)}
         if (cart.items && cart.items.length > 0) {
+            var total = 0;
+            const sub = cart.items.map((item) =>{
+                total += parseInt(item.price);
+                return item.price
+            })
+            this.setState ({
+                subtotal : total
+            })
           const Items = <FlatList contentContainerStyle={styles.list}
             data={cart.items}
             keyExtractor={ item => item.id.toString() }
@@ -23,14 +36,17 @@ render() {
               <View style={styles.lineItem} >
                 <Image style={styles.image} source={{ uri: item.image }} />
                 <Text style={styles.text}>{item.name}</Text>
-                <Text style={styles.text}>{item.quantity} x ${item.price}</Text>
+                <Text style={styles.text}>{item.quantity} x Rs {item.price}</Text>
                 <TouchableOpacity style={{ marginLeft: 'auto' }} onPress={() => cart.removeItem(item)}><Entypo name="cross" size={30} /></TouchableOpacity>
               </View>
             }
           />;
           return (
             <View style={styles.container}>
-              {Items}
+            <View> Sub total :  </View>
+            <View> Delivery Charges :  { subtotal }</View>
+            <View> {Items} </View>            
+            <View> Proced to check out </View>
             </View>
           )
         } else {

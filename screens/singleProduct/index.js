@@ -77,7 +77,7 @@ export default class SingleProduct extends React.Component {
                             <TextInput
                                 style={styles.input}
                                 onChangeText={(quantity) => this.changeQuantity(quantity)}
-                                value={`${this.state.currentItem.quantity}`}
+                                value={`Rs{this.state.currentItem.quantity}`}
                                 keyboardType="numeric"
                                 />
                             <TouchableOpacity style={styles.increaseButton} onPress={this.increaseQuantitiy} >
