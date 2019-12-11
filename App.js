@@ -33,28 +33,73 @@ const { width: screenWidth } = Dimensions.get('window')
 import ProductList from '../alnoor/screens/productsList';
 import SingleProduct from '../alnoor/screens/singleProduct';
 import Cart from '../alnoor/screens/cart';
+import { CartContext } from '../alnoor/context/CartContext';
+
 
 class App extends Component {
+
+
+  state = {
+    isLoadingComplete: false,
+    items: [],
+  };
+
+
+  onAddItem = (item) => {
+    this.setState(state => {
+      var exists = false;
+      const newState = state.items.map(currentItem => {
+        if (currentItem.id === item.id) {
+          exists = true;
+          return {
+            ...currentItem,
+            quantity: currentItem.quantity + item.quantity
+          }
+        } else {
+          return currentItem
+        }
+      });
+      if(exists) {
+        return {
+          items: newState
+        }
+      } else {
+        return {
+          items: [
+            ...state.items,
+            item
+          ]
+        }
+      }
+    });
+  }
+  
+  onRemoveItem = (item) => {
+    this.setState(state => {
+      const remainingItems = [
+        ...state.items.filter(i => i.id !== item.id)
+      ]
+      return {
+        items: remainingItems
+      }
+    });
+  }
+
   render() {
-    return <AppContainer />;
+    return (<CartContext.Provider
+    value={{
+      items: this.state.items,
+      addItem: this.onAddItem,
+      removeItem: this.onRemoveItem,
+    }}
+  >
+      <AppContainer />
+  </CartContext.Provider>);
   }
 }
 export default App;
 
 
-class WelcomeScreen extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Button
-          title="Login"
-          onPress={() => this.props.navigation.navigate('Dashboard')}
-        />
-        <Button title="Sign Up" onPress={() => alert('button pressed')} />
-      </View>
-    );
-  }
-}
 
 class DashboardScreen extends Component {
 
@@ -269,26 +314,37 @@ class Profile extends Component {
 }
 
 
-const DashboardTabNavigator = createBottomTabNavigator(
-  {
-    Feed,
-    Profile,
-    Settings
-  },
-  {
-    navigationOptions: ({ navigation }) => {
-      const { routeName } = navigation.state.routes[navigation.state.index];
-      return {
-        headerTitle: routeName
-      };
-    }
-  }
-);
+// const DashboardTabNavigator = createBottomTabNavigator(
+//   {
+//     Feed,
+//     Profile,
+//     Settings
+//   },
+//   {
+//     navigationOptions: ({ navigation }) => {
+//       const { routeName } = navigation.state.routes[navigation.state.index];
+//       return {
+//         headerTitle: routeName
+//       };
+//     }
+//   }
+// );
 
 const DashboardStackNavigator = createStackNavigator(
   {
-    DashboardTabNavigator: DashboardScreen,
+    Dashboard : DashboardScreen,
+    Products: {
+      screen : ProductList
+    },
+    Product: {
+      screen : SingleProduct
+    },
+    Cart: {
+      screen: Cart
+    },
+    
   },
+  
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
@@ -331,21 +387,14 @@ const AppDrawerNavigator = createDrawerNavigator({
   Dashboard: {
     screen: DashboardStackNavigator
   },
-  Settings: {
-    screen: Settings
-  },
+  
   Profile: {
     screen: Profile
   },
-  Cart: {
-    screen: Cart
+  Settings: {
+    screen: Settings
   },
-  Products: {
-    screen : ProductList
-  },
-  Product: {
-    screen : SingleProduct
-  }
+  
 });
 
 const AppSwitchNavigator = createSwitchNavigator({
