@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { Button, ScrollView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
 import { CartContext } from '../../context/CartContext';
@@ -43,7 +43,10 @@ render() {
             <View style={{ marginTop: 5 }} ><Text style={styles.text}>Subtotal : Rs {subtotal}</Text></View> 
              
             <ScrollView>{Items}</ScrollView>
-            <View style={{ marginTop: 20 , marginBottom: 10 }} ><Text>Proceed to Checkout ----  Rs {subtotal} </Text></View>  
+            <View style={{ marginTop: 20 , marginBottom: 10 }} >
+                <Text>Proceed to Checkout ----  Rs {subtotal} </Text>
+                <Button title=">" onPress={()=>{this.props.navigation.navigate("Location") }}></Button>
+            </View>  
             </View>
           )
         } else {

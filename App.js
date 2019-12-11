@@ -33,6 +33,9 @@ const { width: screenWidth } = Dimensions.get('window')
 import ProductList from '../alnoor/screens/productsList';
 import SingleProduct from '../alnoor/screens/singleProduct';
 import Cart from '../alnoor/screens/cart';
+import Checkout from '../alnoor/screens/checkout';
+import Location from '../alnoor/screens/location';
+
 import { CartContext } from '../alnoor/context/CartContext';
 
 
@@ -275,15 +278,15 @@ componentWillMount() {
   }
 }
 
-class Feed extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Feed</Text>
-      </View>
-    );
-  }
-}
+// class Feed extends Component {
+//   render() {
+//     return (
+//       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//         <Text>Feed</Text>
+//       </View>
+//     );
+//   }
+// }
 
 class Settings extends Component {
 
@@ -330,6 +333,21 @@ class Profile extends Component {
 //   }
 // );
 
+
+
+const CartStackNavigator = createStackNavigator({
+
+  Cart: {
+    screen: Cart
+  },
+  Location: {
+    screen: Location
+  },
+  Checkout: {
+    screen: Checkout
+  },
+
+})
 const DashboardStackNavigator = createStackNavigator(
   {
     Dashboard : DashboardScreen,
@@ -339,9 +357,12 @@ const DashboardStackNavigator = createStackNavigator(
     Product: {
       screen : SingleProduct
     },
-    Cart: {
-      screen: Cart
-    },
+    // Cart: {
+    //   screen: Cart
+    // },
+    // Checkout: {
+    //   screen: Checkout
+    // },
     
   },
   
@@ -356,7 +377,13 @@ const DashboardStackNavigator = createStackNavigator(
                 flex:1
         },
         headerTitle: (
-          <Image style={{ width: 220, height: 35 }} source={require('./assets/images/food-logo.png')}/>
+          <TouchableOpacity onPress={() => navigation.navigate('Dashboard')} >
+          <Image  
+          style={{ width: 220, height: 35 }} source={require('./assets/images/food-logo.png')}/>
+          
+ </TouchableOpacity>
+
+          
       ),
         //title: 'Al-Noor Grocer',
 
@@ -394,12 +421,13 @@ const AppDrawerNavigator = createDrawerNavigator({
   Settings: {
     screen: Settings
   },
-  
+  Cart : CartStackNavigator
 });
 
 const AppSwitchNavigator = createSwitchNavigator({
   //Welcome: { screen: WelcomeScreen },
   Dashboard: { screen: AppDrawerNavigator },
+  
   
 });
 
