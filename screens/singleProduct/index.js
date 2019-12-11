@@ -68,7 +68,7 @@ export default class SingleProduct extends React.Component {
             {cart => ( 
                 <ScrollView>
                     <Image style={styles.image} source={{ uri: product.images[0].src }} />
-                    <Text style={styles.text}>{product.name}     ${product.price}</Text>
+                    <Text style={styles.text}>{product.name}     Rs{product.price}</Text>
                     <View style={styles.quantityCart}>
                         <View style={styles.quantity}>
                             <TouchableOpacity style={styles.decreaseButton} onPress={this.decreaseQuantity}>
@@ -77,7 +77,7 @@ export default class SingleProduct extends React.Component {
                             <TextInput
                                 style={styles.input}
                                 onChangeText={(quantity) => this.changeQuantity(quantity)}
-                                value={`Rs{this.state.currentItem.quantity}`}
+                                value={`${this.state.currentItem.quantity}`}
                                 keyboardType="numeric"
                                 />
                             <TouchableOpacity style={styles.increaseButton} onPress={this.increaseQuantitiy} >

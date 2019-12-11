@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
 import { CartContext } from '../../context/CartContext';
@@ -8,27 +8,24 @@ export default class Cart extends React.Component {
   static navigationOptions = {
     title: 'Cart',
   };
+
   
   state = {
-    subtotal: 0,
+    subtotal: [],
   };
 
 render() {
-
-    const { subtotal } = this.state;
   return (
     <CartContext.Consumer>
         
       {cart => {
         if (cart.items && cart.items.length > 0) {
-            var total = 0;
-            const sub = cart.items.map((item) =>{
-                total += parseInt(item.price);
-                return item.price
+
+            subtotal = 0;
+            cart.items.map((item) => {
+                return subtotal += (parseFloat(item.price) * parseFloat(item.quantity))
             })
-            this.setState ({
-                subtotal : total
-            })
+            
           const Items = <FlatList contentContainerStyle={styles.list}
             data={cart.items}
             keyExtractor={ item => item.id.toString() }
@@ -36,17 +33,17 @@ render() {
               <View style={styles.lineItem} >
                 <Image style={styles.image} source={{ uri: item.image }} />
                 <Text style={styles.text}>{item.name}</Text>
-                <Text style={styles.text}>{item.quantity} x Rs {item.price}</Text>
+                <Text style={styles.text}>{`\n`}{item.quantity} x Rs{item.price}</Text>
                 <TouchableOpacity style={{ marginLeft: 'auto' }} onPress={() => cart.removeItem(item)}><Entypo name="cross" size={30} /></TouchableOpacity>
               </View>
             }
           />;
           return (
             <View style={styles.container}>
-            <View> Sub total :  </View>
-            <View> Delivery Charges :  { subtotal }</View>
-            <View> {Items} </View>            
-            <View> Proced to check out </View>
+            <View style={{ marginTop: 5 }} ><Text style={styles.text}>Subtotal : Rs {subtotal}</Text></View> 
+             
+            <ScrollView>{Items}</ScrollView>
+            <View style={{ marginTop: 20 , marginBottom: 10 }} ><Text>Proceed to Checkout ----  Rs {subtotal} </Text></View>  
             </View>
           )
         } else {
