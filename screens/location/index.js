@@ -3,6 +3,9 @@ import { View,  Dimensions, StyleSheet , Text } from 'react-native';
 
 //import { Constants, MapView, LinearGradient } from 'expo';
 import MapView , { PROVIDER_GOOGLE } from 'react-native-maps';
+import Geocode from "react-geocode";
+//import Geocoder from 'react-native-geocoding';
+
 
 const {width, height} = Dimensions.get('window')
 
@@ -35,12 +38,30 @@ class Location extends Component {
         }
       }
 
+
+      _getaddress = mapRegion => {
+        
+        Geocode.setApiKey("AIzaSyACmDuQNCZ_vObZUh7SqPZ4Oa_tuG5_mQk");
+        Geocode.fromLatLng(mapRegion.latitude,mapRegion.longitude).then(
+            response => {
+              const address = response.results[0].formatted_address;
+              console.log(address);
+            },
+            error => {
+              console.error(error);
+            }
+          );
+      }
+
     _handleMapRegionChange = mapRegion => {
     this.setState({ mapRegion });
 
     //console.log(mapRegion);
 
     };
+
+
+
 
     componentDidMount() {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -64,7 +85,13 @@ class Location extends Component {
 
 render(){
     const {mapRegion} = this.state;
-    console.log('render() ',mapRegion);
+    //console.log('render() ',mapRegion);
+    
+    // this will get address from location
+    //mapRegion ? this._getaddress(mapRegion) : console.log('addressnot found');
+    // it is asking for billing account $300 for free trail
+
+
     return(
         mapRegion ? <View style={styles.container}>
             

@@ -42,8 +42,8 @@ render() {
              
             <ScrollView>{Items}</ScrollView>
             <View style={{ marginTop: 20 , marginBottom: 10 }} >
-                <Text>Proceed to Checkout ----  Rs {subtotal} </Text>
-                <Button title=">" onPress={()=>{this.props.navigation.navigate("Location") }}></Button>
+                <Text>Total Amount ----  Rs {subtotal} </Text>
+                <Button title="Proceed to Checkout" onPress={()=>{this.props.navigation.navigate("Location") }}></Button>
             </View>  
             </View>
           )
