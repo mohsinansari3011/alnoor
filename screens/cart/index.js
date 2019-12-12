@@ -10,9 +10,7 @@ export default class Cart extends React.Component {
   };
 
   
-  state = {
-    subtotal: [],
-  };
+  
 
 render() {
   return (

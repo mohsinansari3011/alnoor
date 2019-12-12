@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Alert , Text, View , Button ,Image , ScrollView, Dimensions , 
+import { StyleSheet, ToastAndroid , Text, View , Button ,Image , ScrollView, Dimensions , 
   SafeAreaView,
   TouchableOpacity,
   FlatList } from 'react-native';
@@ -43,12 +43,12 @@ class App extends Component {
 
 
   state = {
-    isLoadingComplete: false,
     items: [],
   };
 
 
   onAddItem = (item) => {
+
     this.setState(state => {
       var exists = false;
       const newState = state.items.map(currentItem => {
@@ -75,6 +75,8 @@ class App extends Component {
         }
       }
     });
+
+    ToastAndroid.show(`${item.name} added to cart`, ToastAndroid.SHORT);
   }
   
   onRemoveItem = (item) => {
@@ -380,8 +382,7 @@ const DashboardStackNavigator = createStackNavigator(
           <TouchableOpacity onPress={() => navigation.navigate('Dashboard')} >
           <Image  
           style={{ width: 220, height: 35 }} source={require('./assets/images/food-logo.png')}/>
-          
- </TouchableOpacity>
+        </TouchableOpacity>
 
           
       ),
