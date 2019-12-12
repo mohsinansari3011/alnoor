@@ -1,16 +1,16 @@
 import React , {Component} from 'react'
-import { View,  Dimensions, StyleSheet , Text } from 'react-native';
+import { View, Button ,  Dimensions, StyleSheet , Text } from 'react-native';
 
 //import { Constants, MapView, LinearGradient } from 'expo';
 import MapView , { PROVIDER_GOOGLE } from 'react-native-maps';
-import Geocode from "react-geocode";
+//import Geocode from "react-geocode";
 //import Geocoder from 'react-native-geocoding';
 
 
 const {width, height} = Dimensions.get('window')
 
-const SCREEN_HEIGHT = height
-const SCREEN_WIDTH = width
+//const SCREEN_HEIGHT = height
+//const SCREEN_WIDTH = width
 const ASPECT_RATIO = width / height
 const LATITUDE_DELTA = 0.0922
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
@@ -39,19 +39,19 @@ class Location extends Component {
       }
 
 
-      _getaddress = mapRegion => {
+    //   _getaddress = mapRegion => {
         
-        Geocode.setApiKey("AIzaSyACmDuQNCZ_vObZUh7SqPZ4Oa_tuG5_mQk");
-        Geocode.fromLatLng(mapRegion.latitude,mapRegion.longitude).then(
-            response => {
-              const address = response.results[0].formatted_address;
-              console.log(address);
-            },
-            error => {
-              console.error(error);
-            }
-          );
-      }
+    //     Geocode.setApiKey("AIzaSyACmDuQNCZ_vObZUh7SqPZ4Oa_tuG5_mQk");
+    //     Geocode.fromLatLng(mapRegion.latitude,mapRegion.longitude).then(
+    //         response => {
+    //           const address = response.results[0].formatted_address;
+    //           console.log(address);
+    //         },
+    //         error => {
+    //           console.error(error);
+    //         }
+    //       );
+    //   }
 
     _handleMapRegionChange = mapRegion => {
     this.setState({ mapRegion });
@@ -108,7 +108,6 @@ render(){
      />
       </MapView>
             
-
         </View> : <Text>Loading....</Text>
     )
 
