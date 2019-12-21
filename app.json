@@ -25,9 +25,17 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.alnoorgrocer.alnoor"
+      "bundleIdentifier": "com.alnoorgrocer.alnoor",
+      "config": {
+        "googleMapsApiKey": "<ios maps api key>"
+    }
     },"android": {
-      "package": "com.alnoorgrocer.alnoor"
+      "package": "com.alnoorgrocer.alnoor",
+      "config": {
+        "googleMaps": {
+            "apiKey": "AIzaSyACmDuQNCZ_vObZUh7SqPZ4Oa_tuG5_mQk"
+        }
+    }
     }
   }
 }

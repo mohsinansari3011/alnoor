@@ -35,6 +35,7 @@ class Location extends Component {
             // latitudeDelta: 0.0922,
             // longitudeDelta: 0.0464,
          // },
+        
         }
       }
 
@@ -56,7 +57,7 @@ class Location extends Component {
     _handleMapRegionChange = mapRegion => {
     this.setState({ mapRegion });
 
-    //console.log(mapRegion);
+    console.log(mapRegion);
 
     };
 
@@ -76,7 +77,7 @@ class Location extends Component {
         }
 
         this.setState({mapRegion: initialRegion})
-        //console.log(initialRegion);
+        console.log(initialRegion);
     },
     (error) => alert(JSON.stringify(error)),
     {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
@@ -96,15 +97,22 @@ render(){
         mapRegion ? <View style={styles.container}>
             
         <MapView style={styles.map}
+        
         provider={PROVIDER_GOOGLE}
-        //showsUserLocation
+        showsUserLocation
+        //showsMyLocationButton
+        //initialRegion={mapRegion}
         region={mapRegion}
-        onRegionChange={this._handleMapRegionChange}>
+        //onRegionChange={this._handleMapRegionChange}
+        //onRegionChange={(e) => this.setState({ mapRegion: e })}
+        onRegionChangeComplete={this._handleMapRegionChange}
+        >
         <MapView.Marker
         coordinate={{latitude: mapRegion.latitude,
         longitude: mapRegion.longitude}}
         title={"title"}
         description={"description"}
+        //onDragEnd={(e) => console.log(e)}
      />
       </MapView>
             
