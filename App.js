@@ -342,9 +342,9 @@ const CartStackNavigator = createStackNavigator({
   Cart: {
     screen: Cart
   },
-  // Location: {
-  //   screen: Location
-  // },
+  Location: {
+    screen: Location
+  },
   Checkout: {
     screen: Checkout
   },
@@ -422,10 +422,7 @@ const AppDrawerNavigator = createDrawerNavigator({
   Settings: {
     screen: Settings
   },
-  Cart : CartStackNavigator ,
-  Location: {
-    screen: Location
-  },
+  Cart : CartStackNavigator 
 });
 
 const AppSwitchNavigator = createSwitchNavigator({
