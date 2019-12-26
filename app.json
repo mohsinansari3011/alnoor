@@ -23,25 +23,21 @@
       "bundleIdentifier": "com.alnoorgrocer.alnoor",
       "config": {
         "googleMapsApiKey": "<ios maps api key>"
-    },"splash": {
-      "image": ".assets/splash.png",
-      "resizeMode": "cover"
     }
     },"android": {
       "package": "com.alnoorgrocer.alnoor",
       "config": {
         "googleMaps": {
             "apiKey": "AIzaSyACmDuQNCZ_vObZUh7SqPZ4Oa_tuG5_mQk"
-        },
-        "splash": {
-          "mdpi": "./assets/android/splash/splash-mdpi/screen.png",
-          "hdpi": "./assets/android/splash/splash-hdpi/screen.png",
-          "xhdpi": "./assets/android/splash/splash-xhdpi/screen.png",
-          "xxhdpi": "./assets/android/splash/splash-xxhdpi/screen.png",
-          "xxxhdpi": "./assets/android/splash/splash-xxxhdpi/screen.png",
-          "resizeMode": "cover",
-          "backgroundColor": "#ffffff"
         }
+    },"splash": {
+      "mdpi": "assets/android/splash-mdpi/screen.png",
+      "hdpi": "assets/android/splash-hdpi/screen.png",
+      "xhdpi": "assets/android/splash-xhdpi/screen.png",
+      "xxhdpi": "assets/android/splash-xxhdpi/screen.png",
+      "xxxhdpi": "assets/android/splash-xxxhdpi/screen.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
     }
     }
   }
