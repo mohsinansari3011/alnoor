@@ -349,6 +349,8 @@ const CartStackNavigator = createStackNavigator({
     screen: Checkout
   },
 
+},{
+  headerMode: "none"
 })
 const DashboardStackNavigator = createStackNavigator(
   {
@@ -359,6 +361,7 @@ const DashboardStackNavigator = createStackNavigator(
     Product: {
       screen : SingleProduct
     },
+    Cart : CartStackNavigator 
     // Cart: {
     //   screen: Cart
     // },
@@ -422,7 +425,7 @@ const AppDrawerNavigator = createDrawerNavigator({
   Settings: {
     screen: Settings
   },
-  Cart : CartStackNavigator 
+  //Cart : CartStackNavigator 
 });
 
 const AppSwitchNavigator = createSwitchNavigator({
@@ -431,6 +434,10 @@ const AppSwitchNavigator = createSwitchNavigator({
   
   
 });
+
+
+
+
 
 
 const AppContainer = createAppContainer(AppSwitchNavigator);
