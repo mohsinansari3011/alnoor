@@ -13,7 +13,7 @@ import {
   createBottomTabNavigator,
   createStackNavigator
 } from 'react-navigation';
-
+import { Input } from 'react-native-elements';
 import Prodcut_Hortizontal from './components/explore/Prodcut_Hortizontal'
 import { SliderBox } from 'react-native-image-slider-box';
 import Slideshow from 'react-native-image-slider-show';
@@ -35,6 +35,7 @@ import SingleProduct from '../alnoor/screens/singleProduct';
 import Cart from '../alnoor/screens/cart';
 import Checkout from '../alnoor/screens/checkout';
 import Location from '../alnoor/screens/location';
+//import Header from '../alnoor/screens/header';
 
 import { CartContext } from '../alnoor/context/CartContext';
 
@@ -117,23 +118,19 @@ class DashboardScreen extends Component {
       interval: null,
       dataSource: [
         {
-          title: 'Title Image 1',
-          caption: 'Caption 1',
-          url: 'https://source.unsplash.com/1024x768/?nature',
+          title: '',
+          caption: '',
+          url: require('./assets/images/01.jpg'),
         }, {
-          title: 'Title Image 2',
-          caption: 'Caption 2',
-          url: 'https://source.unsplash.com/1024x768/?water',
+          title: '',
+          caption: '',
+          url: require('./assets/images/02.jpg'),
         }, {
-          title: 'Title Image 3',
-          caption: 'Caption 3',
-          url: 'https://source.unsplash.com/1024x768/?girl',
+          title: '',
+          caption: '',
+          url: require('./assets/images/03.jpg'),
         },
-        , {
-          title: 'Title Image 4',
-          caption: 'Caption 4',
-          url: 'https://source.unsplash.com/1024x768/?tree',
-        },
+         
       ],
       images: [
         'https://source.unsplash.com/1024x768/?nature',
@@ -349,8 +346,6 @@ const CartStackNavigator = createStackNavigator({
     screen: Checkout
   },
 
-},{
-  headerMode: "none"
 })
 const DashboardStackNavigator = createStackNavigator(
   {
@@ -361,7 +356,6 @@ const DashboardStackNavigator = createStackNavigator(
     Product: {
       screen : SingleProduct
     },
-    Cart : CartStackNavigator 
     // Cart: {
     //   screen: Cart
     // },
@@ -373,43 +367,45 @@ const DashboardStackNavigator = createStackNavigator(
   
   {
     defaultNavigationOptions: ({ navigation }) => {
-      return {
-        headerTitleStyle : {
-                //color:"white",
-                //fontFamily:"OpenSans",
-                alignSelf: 'center' ,
-                textAlign: 'center',
-                flex:1
-        },
-        headerTitle: (
-          <TouchableOpacity onPress={() => navigation.navigate('Dashboard')} >
-          <Image  
-          style={{ width: 220, height: 35 }} source={require('./assets/images/food-logo.png')}/>
-        </TouchableOpacity>
-
-          
-      ),
-        //title: 'Al-Noor Grocer',
-
-        headerLeft: (
-          <Icon
-            style={{ paddingLeft: 10 }}
-            onPress={() => navigation.openDrawer()}
-            name="md-menu"
-            size={30}
-          />
-        ),
-        headerRight: (
-          <Icon
-            style={{ paddingRight: 10 }}
-            name={Platform.OS === 'ios' ? `ios-cart` : 'md-cart'}
-            size={30}
-            onPress={() => navigation.navigate('Cart')}
-          />
-        ),
+     return{
+      headerStyle: {                                                                                        
+        //backgroundColor: '#298e82',  
+        //height : 100                                                                         
+      },
+      headerTitleStyle : {
+              alignSelf: 'center' ,
+              textAlign: 'center',
+              flex:1
+      },
+      headerTitle: (
+      
+      <TouchableOpacity onPress={() => navigation.navigate('Dashboard')} >
+        <Image  
+        style={{ width: 220, height: 50 }} source={require('./assets/images/al-noor.png')}/>
         
+      </TouchableOpacity>
+      
+    ),
+      headerLeft: (
+        <Icon
+          style={{ paddingLeft: 10 }}
+          onPress={() => navigation.openDrawer()}
+          name="md-menu"
+          size={30}
+        />
+      ),
+      headerRight: (
+        <Icon
+          style={{ paddingRight: 10 }}
+          name={Platform.OS === 'ios' ? `ios-cart` : 'md-cart'}
+          size={30}
+          onPress={() => navigation.navigate('Cart')}
+        />
+      ),
+      
+      
 
-      };
+    };
     }
   }
 );
@@ -425,7 +421,7 @@ const AppDrawerNavigator = createDrawerNavigator({
   Settings: {
     screen: Settings
   },
-  //Cart : CartStackNavigator 
+  Cart : CartStackNavigator 
 });
 
 const AppSwitchNavigator = createSwitchNavigator({
@@ -434,10 +430,6 @@ const AppSwitchNavigator = createSwitchNavigator({
   
   
 });
-
-
-
-
 
 
 const AppContainer = createAppContainer(AppSwitchNavigator);
