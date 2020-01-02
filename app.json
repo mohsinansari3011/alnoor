@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Al-Noor Grocer",
+    "name": "Al-Noor Grocers",
     "slug": "alnoor",
     "privacy": "public",
     "sdkVersion": "35.0.0",
@@ -20,12 +20,12 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.alnoorgrocer.alnoor",
+      "bundleIdentifier": "com.alnoorgrocers.alnoor",
       "config": {
         "googleMapsApiKey": "<ios maps api key>"
     }
     },"android": {
-      "package": "com.alnoorgrocer.alnoor",
+      "package": "com.alnoorgrocers.alnoor",
       "config": {
         "googleMaps": {
             "apiKey": "AIzaSyACmDuQNCZ_vObZUh7SqPZ4Oa_tuG5_mQk"
