@@ -20,7 +20,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.alnoorgrocers.alnoor",
+      "bundleIdentifier": "com.alnoorgrocers.alnoor"
     },"android": {
       "package": "com.alnoorgrocers.alnoor",
       "config": {
