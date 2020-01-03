@@ -21,9 +21,6 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.alnoorgrocers.alnoor",
-      "config": {
-        "googleMapsApiKey": "<ios maps api key>"
-    }
     },"android": {
       "package": "com.alnoorgrocers.alnoor",
       "config": {
