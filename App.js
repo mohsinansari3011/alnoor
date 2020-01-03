@@ -36,6 +36,8 @@ import Homeslider from './components/explore/Homeslider';
 import HomeCategories from './components/explore/HomeCategories';
 import HomeLatestProducts from './components/explore/HomeLatestProducts';
 
+import LatestProduct from './components/explore/LatestProduct';
+
 import { CartContext } from '../alnoor/context/CartContext';
 
 
@@ -119,7 +121,7 @@ class DashboardScreen extends Component {
       <View ><Text style={{ textAlign: 'center',}}>Latest Products</Text></View>
       <Button color="#05a5d1" title="View More" onPress={() => this.props.navigation.navigate("Products")} />
       </View>
-
+      <LatestProduct />
       <HomeLatestProducts navigation = {this.props.navigation}/>
       <HomeCategories navigation = {this.props.navigation}/>
 
