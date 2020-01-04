@@ -7,17 +7,24 @@ import WooApi from '../../components/config/wooapi';
 
 
 
-export default class ProductList extends React.Component {
+export default class ProductListCategory extends React.Component {
     static navigationOptions = {
-      title: 'Products',
+      title: 'Categoty Products ',
     };
   
-    state = {
-      products: []
-    }
-  
+    constructor(props) {
+      super(props);
+      const Categoryid = props.navigation.state.params.Categoryid;
+      this.state = {
+        Categoryid : Categoryid,
+        products: []
+      }
+  }
+
     fetchProducts = () => {
-      const url = `${WooApi.url.wc}products?per_page=20&consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
+      const {Categoryid} = this.state;
+      //console.log(Categoryid);
+      const url = `${WooApi.url.wc}products?category=${Categoryid}&consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
       //console.log(url);
       axios.get(url)
       .then(response => this.setState({ products: response.data }))
@@ -42,6 +49,9 @@ export default class ProductList extends React.Component {
     )
   
     render() {
+
+      //const {Categoryid} = this.state;
+      //console.log(Categoryid);
       return (
         <ScrollView style={styles.container}>
           {

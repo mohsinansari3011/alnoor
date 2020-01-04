@@ -1,54 +1,92 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
-import MaterialButtonDanger from "../material/Button";
+import { StyleSheet, ScrollView , View, Image, Text , FlatList, TouchableOpacity} from "react-native";
+//import MaterialButtonDanger from "../material/Button";
+
+import axios from 'axios';
+
+import WooApi from '../../components/config/wooapi';  
 
 class LatestProduct extends Component {
-    state = {  }
-    render() {
-        return (
+    state = {
+        products: []
+      }
 
-            <View style={[styles.container, styles.materialCardWithImageAndTitle1]}>
-            <View style={styles.rectRow}>
-              <View style={styles.rect}>
-                <Image
-                  source={require("../../assets/images/03.jpg")}
-                  resizeMode="contain"
-                  style={styles.image}
-                ></Image>
-                <View style={styles.rs1550Row}>
-                  <Text style={styles.rs1550}>Rs 1550</Text>
-                  <Text style={styles.rs15503}>Rs 1550</Text>
-                </View>
-                <Text style={styles.loremIpsum}>
-                  Buy Milk Cartan{"\n"}Expire 09 jan
-                </Text>
-                <MaterialButtonDanger
-                  style={styles.materialButtonDanger}
-                ></MaterialButtonDanger>
+    fetchProducts = () => {
+    const url = `${WooApi.url.wc}products?per_page=5&consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
+    //console.log(url);
+    axios.get(url)
+    .then(response => this.setState({ products: response.data }))
+    .catch(error => console.log('error',error));
+    }
+    
+    componentWillMount() {
+        //this.fetchProducts();
+      }
+      componentDidMount(){
+        this.fetchProducts();
+      }
+
+      renderItem = ({item}) => (
+        <View style={[styles.container, styles.materialCardWithImageAndTitle1]}>
+            <View style={styles.rect}>
+              <Image
+              source={{ uri: item.images[0].src }}
+                resizeMode="contain"
+                style={styles.image}
+              ></Image>
+              <View style={styles.rs1550Row}>
+                <Text style={styles.rs1550}>Rs {item.price}</Text>
+                <Text style={styles.rs15503}>Rs {(parseFloat(item.price) + 200)}</Text>
               </View>
-              <View style={styles.rect2}>
-                <Image
-                  source={require("../../assets/images/03.jpg")}
-                  resizeMode="contain"
-                  style={styles.image2}
-                ></Image>
-                <Text style={styles.rs15504}>Rs 1550</Text>
-              </View>
-              <View style={styles.rect3}>
-                <Image
-                  source={require("../../assets/images/03.jpg")}
-                  resizeMode="contain"
-                  style={styles.image3}
-                ></Image>
-              </View>
+              <Text style={styles.loremIpsum}>
+              {item.name}
+              </Text>
+              <TouchableOpacity style={[stylesb.container, styles.materialButtonDanger]}
+              onPress={() => this.props.navigation.navigate("Product", { product: item })}>
+              <Text style={styles.caption}>Add</Text>
+            </TouchableOpacity>
             </View>
           </View>
 
-            
+      )
+
+
+    render() {
+        return (
+           
+
+            <View style={{height : 200, marginTop:5}}>
+                <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator ={false}
+                
+                style={{flexDirection:'row'}}>
+                {
+                    this.state.products.length ?
+                    <FlatList
+                    //contentContainerStyle={prostyles.list} 
+                    numColumns={10}
+                    data={this.state.products}
+                    keyExtractor={ item => item.id.toString() }
+                    renderItem={this.renderItem}
+                    />
+                    :
+                    <View style={stylesb.loaderContainer}>
+                    <Image
+                        source={ require('../../assets/images/cart-loading.gif') }
+                        style={stylesb.loaderImage}
+                    />
+                    </View>
+                }
+                </ScrollView>
+
+                </View>
+
+          
+           
         );
     }
 }
-
 
 
 const styles = StyleSheet.create({
@@ -69,17 +107,15 @@ const styles = StyleSheet.create({
       overflow: "hidden"
     },
     rect: {
-      top: 0,
-      left: 1,
-      width: 88,
-      height: 149,
+      width: 107,
+      height: 158,
       backgroundColor: "rgba(230, 230, 230,1)",
-      position: "absolute"
+      marginTop: 1
     },
     image: {
-      width: 55,
-      height: 37,
-      marginTop: 23,
+      width: 71,
+      height: 47,
+      marginTop: 13,
       marginLeft: 13
     },
     rs1550: {
@@ -95,11 +131,12 @@ const styles = StyleSheet.create({
       color: "#121212",
       justifyContent: "space-between",
       fontSize: 9,
-      //fontFamily: "roboto-regular",
+     // fontFamily: "roboto-regular",
       lineHeight: 16,
       letterSpacing: 0,
       textAlign: "left",
-      //textDecorationStyle: "line-through",
+      //textDecoration: "line-through",
+      textDecorationLine: 'line-through', textDecorationStyle: 'solid',
       marginLeft: 9,
       marginTop: 1
     },
@@ -108,7 +145,7 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       marginTop: 7,
       marginLeft: 10,
-      marginRight: 3
+      marginRight: 22
     },
     loremIpsum: {
       color: "#121212",
@@ -120,25 +157,54 @@ const styles = StyleSheet.create({
       marginLeft: 10
     },
     materialButtonDanger: {
-      top: 124,
-      left: 0,
       width: 88,
       height: 26,
-      position: "absolute"
+      marginTop: 7,
+      marginLeft: 9
     },
-    rectStack: {
-      width: 30,
-      height: 150,
-      marginTop: 1,
-      marginLeft: -1
+    materialCardWithImageAndTitle1: {
+        width: 108,
+        height: 172,
+        flex:1,
+        padding : 5
+      },
+
+  });
+  
+
+  
+const stylesb = StyleSheet.create({
+    container: {
+      backgroundColor: "#F44336",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      paddingRight: 16,
+      paddingLeft: 16,
+      elevation: 2,
+      minWidth: 88,
+      borderRadius: 2,
+      shadowOffset: {
+        height: 1,
+        width: 0
+      },
+      shadowColor: "#000",
+      shadowOpacity: 0.35,
+      shadowRadius: 5
     },
-
-    materialCardWithImageAndTitle1x: {
-        width: 86,
-        height: 151,
-        marginTop: 294
-      }
-
+    caption: {
+      color: "#fff",
+      fontSize: 14,
+      //fontFamily: "roboto-regular"
+    },
+    loaderContainer: {
+        alignItems: 'center', 
+        justifyContent: 'center',
+      },
+      loaderImage: {
+        width: 200,
+        height: 200,
+      },
   });
 
 export default LatestProduct;

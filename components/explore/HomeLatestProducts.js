@@ -55,6 +55,7 @@ renderItem = ({item}) => (
                 <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator ={false}
+                
                 >
                 {
                     this.state.products.length ?

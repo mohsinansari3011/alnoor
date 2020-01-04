@@ -29,6 +29,7 @@ const { width: screenWidth } = Dimensions.get('window')
 
 import ProductList from '../alnoor/screens/productsList';
 import SingleProduct from '../alnoor/screens/singleProduct';
+import ProductListCategory from '../alnoor/screens/productlistbycategory';
 import Cart from '../alnoor/screens/cart';
 import Checkout from '../alnoor/screens/checkout';
 import Location from '../alnoor/screens/location';
@@ -121,8 +122,8 @@ class DashboardScreen extends Component {
       <View ><Text style={{ textAlign: 'center',}}>Latest Products</Text></View>
       <Button color="#05a5d1" title="View More" onPress={() => this.props.navigation.navigate("Products")} />
       </View>
-      <LatestProduct />
-      <HomeLatestProducts navigation = {this.props.navigation}/>
+      <LatestProduct navigation = {this.props.navigation}/>
+      
       <HomeCategories navigation = {this.props.navigation}/>
 
       </ScrollView>
@@ -200,6 +201,10 @@ const DashboardStackNavigator = createStackNavigator(
     Product: {
       screen : SingleProduct
     },
+    CatProducts: {
+      screen : ProductListCategory
+    },
+    
     // Cart: {
     //   screen: Cart
     // },
