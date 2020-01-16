@@ -154,7 +154,7 @@ class Checkout extends Component {
           }`;
     
     
-        const url = `${WooApi.url.wc}customers?consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
+        const url = `${WooApi.url.wc}orders?consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
         console.log(url);
         axios.post(url,objOrder)
         .then(response => {
@@ -215,7 +215,7 @@ class Checkout extends Component {
                 "quantity": ${item.quantity}
                 },`
         })
-                console.log('cart---', this.state.itemdetails);
+                //console.log('cart---', this.state.itemdetails);
     }
 
 
