@@ -4,9 +4,9 @@ import { Entypo } from '@expo/vector-icons';
 
 import { CartContext } from '../../context/CartContext';
 
-export default class Cart extends React.Component {
+export default class Thankyou extends React.Component {
   static navigationOptions = {
-    title: 'Cart',
+    title: 'Order Completed',
   };
 
   
@@ -43,7 +43,8 @@ render() {
             <ScrollView>{Items}</ScrollView>
             <View style={{ marginTop: 20 , marginBottom: 10 }} >
                 <Text>Total Amount ----  Rs {subtotal} </Text>
-                <Button title="Proceed to Checkout" onPress={()=>{this.props.navigation.navigate("Checkout") }}></Button>
+                <Text>Alnoor-{Math.round(Math.random() * 1000)} Your Order has been completed Successfully </Text>
+                <Button title="Proceed to Dashboard" onPress={()=>{this.props.navigation.navigate("Dashboard") }}></Button>
             </View>  
             </View>
           )

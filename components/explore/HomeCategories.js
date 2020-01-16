@@ -7,7 +7,8 @@ import { Text, View , Image ,
 const { width: screenWidth } = Dimensions.get('window')
 
 import axios from 'axios';
-
+const Entities = require('html-entities').XmlEntities;
+const entities = new Entities();
 import WooApi from '../../components/config/wooapi';  
 
 class HomeCategories extends Component {
@@ -44,7 +45,7 @@ class HomeCategories extends Component {
 
   fetchCategories = () => {
     const url = `${WooApi.url.wc}products/categories?consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
-    console.log(url);
+    //console.log(url);
     axios.get(url)
     .then(response => this.setState({ categories: response.data }))
     .catch(error => console.log('error',error));
@@ -81,8 +82,8 @@ class HomeCategories extends Component {
           ></Image>}
          
             <View style={styles.rs1550Stack}>
-              <Text style={styles.rs1550}>{item.name}</Text>
-              <Text style={styles.text}>{item.description}</Text>
+              <Text style={styles.rs1550}>{entities.decode(item.name)}</Text>
+              <Text style={styles.text}>{entities.decode(item.description)}</Text>
             </View>
             <View style={styles_text.container}>
               <Text style={styles_text.text2}>&gt;</Text>

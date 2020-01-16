@@ -32,6 +32,7 @@ import SingleProduct from '../alnoor/screens/singleProduct';
 import ProductListCategory from '../alnoor/screens/productlistbycategory';
 import Cart from '../alnoor/screens/cart';
 import Checkout from '../alnoor/screens/checkout';
+import Thankyou from '../alnoor/screens/thankyou';
 import Location from '../alnoor/screens/location';
 import Homeslider from './components/explore/Homeslider';
 import HomeCategories from './components/explore/HomeCategories';
@@ -40,6 +41,7 @@ import HomeLatestProducts from './components/explore/HomeLatestProducts';
 import LatestProduct from './components/explore/LatestProduct';
 
 import { CartContext } from '../alnoor/context/CartContext';
+//import Totalcart from './screens/cart/totalcart';
 
 
 class App extends Component {
@@ -80,7 +82,7 @@ class App extends Component {
       }
     });
 
-    ToastAndroid.show(`${item.name} added to cart`, ToastAndroid.SHORT);
+    //ToastAndroid.show(`${item.name} added to cart`, ToastAndroid.SHORT);
   }
   
   onRemoveItem = (item) => {
@@ -189,6 +191,8 @@ const CartStackNavigator = createStackNavigator({
   },
   Checkout: {
     screen: Checkout
+  },Thankyou: {
+    screen: Thankyou
   },
 
 })
@@ -215,10 +219,10 @@ const DashboardStackNavigator = createStackNavigator(
   },
   
   {
-    defaultNavigationOptions: ({ navigation }) => {
+    defaultNavigationOptions: ({ navigation,props }) => {
      return{
       headerStyle: {                                                                                        
-        //backgroundColor: '#298e82',  
+        backgroundColor: 'light-grey',  
         //height : 100                                                                         
       },
       headerTitleStyle : {
@@ -244,12 +248,21 @@ const DashboardStackNavigator = createStackNavigator(
         />
       ),
       headerRight: (
-        <Icon
-          style={{ paddingRight: 10 }}
-          name={Platform.OS === 'ios' ? `ios-cart` : 'md-cart'}
-          size={30}
-          onPress={() => navigation.navigate('Cart')}
-        />
+        <TouchableOpacity style={{ padding: 15, color: 'black' }}
+        onPress={() => { navigation.navigate('Cart') }}
+      >
+      <Icon
+      style={{ paddingRight: 10 }}
+      name={Platform.OS === 'ios' ? `ios-cart` : 'md-cart'}
+      size={30}
+      //onPress={() => navigation.navigate('Cart')}
+    />
+        
+        
+        
+
+      </TouchableOpacity>
+       
       ),
       
       
@@ -258,6 +271,10 @@ const DashboardStackNavigator = createStackNavigator(
     }
   }
 );
+
+
+
+
 
 const AppDrawerNavigator = createDrawerNavigator({
   Dashboard: {
