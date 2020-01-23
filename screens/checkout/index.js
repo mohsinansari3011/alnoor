@@ -1,6 +1,7 @@
 import React , {Component} from 'react'
 //import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
-import { TextInput, KeyboardAvoidingView,  Button, ScrollView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { TextInput, KeyboardAvoidingView,  Button, ScrollView, View, Text, StyleSheet, 
+    FlatList, Image, TouchableOpacity , RadioButton } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 //import { ScrollView } from 'react-native';
 
@@ -29,17 +30,49 @@ class Checkout extends Component {
         country:'',
         phone:'',
         cart:[],
-        itemdetails:''
-          
-
+        itemdetails:'',
+        shipping_methods :[],
+        payment_gateways : [],
 
      }
 
 
 
 
+     listofshippingzones = () => {
+        //const url = `${WooApi.url.wc}shipping/zones?consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
+        const url = `${WooApi.url.wc}shipping/zones/1/locations?consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
+        
+        console.log(url);
+        axios.get(url)
+        .then(response => 
+            console.log('listofshippingzones',response.data)
+            //this.setState({ products: response.data })
+            )
+        .catch(error => console.log('error',error));
+
+     }
 
 
+     listofshipping_methods = () => {
+        //const url = `${WooApi.url.wc}shipping/zones?consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
+        const url = `${WooApi.url.wc}shipping/zones/1/methods?consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
+        
+        console.log(url);
+        axios.get(url)
+        .then(response => 
+            //console.log('shipping_methods',response.data)
+            this.setState({ shipping_methods: response.data })
+            )
+        .catch(error => console.log('error',error));
+
+     }
+
+    
+
+     componentWillMount(){
+         //this.listofpayment_gateways();
+     }
     postCustomer = () => {
     const {
     email,
@@ -155,16 +188,17 @@ class Checkout extends Component {
     
     
         const url = `${WooApi.url.wc}orders?consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
-        console.log(url);
-        axios.post(url,objOrder)
-        .then(response => {
-            //this.postCustomer();
+        console.log(objOrder);
+
+        // axios.post(url,objOrder)
+        // .then(response => {
+        //     //this.postCustomer();
             
-            console.log('postobjOrder',response.data)
-            navigate("Thankyou")
-            //this.setState({ products: response.data })
-            })
-        .catch(error => console.log('error',error));
+        //     console.log('postobjOrder',response.data)
+        //     navigate("Thankyou")
+        //     //this.setState({ products: response.data })
+        //     })
+        // .catch(error => console.log('error',error));
         }
 
 
@@ -225,10 +259,11 @@ render(){
 
     
 
-    
+    const {payment_gateways} = this.state;
 
     return(
 
+        
         <KeyboardAvoidingView keyboardVerticalOffset = {Header.HEIGHT + 30} style={styles.container} behavior="padding" enabled>
         
         <ScrollView>
@@ -311,7 +346,22 @@ render(){
                keyboardType = "number-pad"
                onChangeText = {this.handlePhone}/>
 
-           
+               <RadioButton.Group
+                onValueChange={value => this.setState({ value })}
+                value={this.state.value}
+            >
+      
+            {payment_gateways ? payment_gateways.map((item) =>{
+                return (<View>
+                    
+                    <Text>{item.title}</Text>
+                    <RadioButton value={item.id} />
+                    </View>)
+            }) : <Text>Empty</Text>
+
+            }
+            </RadioButton.Group>
+
                <Button title="Submit" onPress={()=>{this.postOrder(this.props) }}></Button>
             
          </View>

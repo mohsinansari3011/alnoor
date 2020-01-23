@@ -37,7 +37,7 @@ import Location from '../alnoor/screens/location';
 import Homeslider from './components/explore/Homeslider';
 import HomeCategories from './components/explore/HomeCategories';
 import HomeLatestProducts from './components/explore/HomeLatestProducts';
-
+import Paymentgateway from '../alnoor/screens/paymentgateways';
 import LatestProduct from './components/explore/LatestProduct';
 
 import { CartContext } from '../alnoor/context/CartContext';
@@ -82,7 +82,7 @@ class App extends Component {
       }
     });
 
-    //ToastAndroid.show(`${item.name} added to cart`, ToastAndroid.SHORT);
+    ToastAndroid.show(`${item.name} added to cart`, ToastAndroid.SHORT);
   }
   
   onRemoveItem = (item) => {
@@ -191,8 +191,12 @@ const CartStackNavigator = createStackNavigator({
   },
   Checkout: {
     screen: Checkout
-  },Thankyou: {
+  },
+  Thankyou: {
     screen: Thankyou
+  },
+  Paymentgateway: {
+    screen: Paymentgateway
   },
 
 })
