@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, ScrollView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
-
+import { RadioButton } from 'react-native-paper';
 
 import axios from 'axios';
 import WooApi from '../../components/config/wooapi';  
@@ -16,6 +16,7 @@ export default class Paymentgateways extends React.Component {
 
     state = {
         payment_gateways : [],
+        value : ''
      }
   
 
@@ -33,10 +34,30 @@ export default class Paymentgateways extends React.Component {
  }
 
 
+//  <RadioButton.Group
+//         onValueChange={value => this.setState({ value })}
+//         value={this.state.value}
+//       >
+//         <View>
+//           <Text>First</Text>
+//           <RadioButton value="first" />
+//         </View>
+//         <View>
+//           <Text>Second</Text>
+//           <RadioButton value="second" />
+//         </View>
+//       </RadioButton.Group>
+
+
    filterGateway(){
        const {payment_gateways} = this.state;
        const gateway = payment_gateways.map((item) =>{
-           return item.enabled ? <View><Text>{item.title}</Text></View> : <View></View>
+           return (
+            item.enabled ? <View key={item.id}>
+                <Text>{item.title}</Text>
+                <RadioButton value={`${item.id},${item.title}`} />
+                </View> : <View></View>
+           )
        })
 
        return gateway;
@@ -45,8 +66,9 @@ export default class Paymentgateways extends React.Component {
     this.listofpayment_gateways();
 }
 
-
 render() {
+
+    
   return (
     <CartContext.Consumer>
         
@@ -58,12 +80,20 @@ render() {
                 return subtotal += (parseFloat(item.price) * parseFloat(item.quantity))
             })
             
-          
+            //console.log('cart.paymentmethod   ',cart.paymentmethod);
+            //console.log('cart.paymentmethod_title   ',cart.paymentmethod_title);
           return (
             <View style={styles.container}>
            
-             {this.state.payment_gateways ? this.filterGateway() : <View></View>}
+            <RadioButton.Group
+                    onValueChange={value => cart.addPayM(value)}
+                    value={cart.paymentmethod} >
+                {this.state.payment_gateways ? this.filterGateway() : NULL}
+            </RadioButton.Group>
+            
            
+             
+
             <View style={{ marginTop: 20 , marginBottom: 10 }} >
                 <Text>Total Amount ----  Rs {subtotal} </Text>
                 <Button title="CONTINUE" onPress={()=>{this.props.navigation.navigate("Checkout") }}></Button>

@@ -49,8 +49,29 @@ class App extends Component {
 
   state = {
     items: [],
-    
+    paymentmethod:'',
+    customerinfo: [],
+    //paymentmethod_title:'',
   };
+
+  addPayM = (item) =>{
+    this.setState({
+      paymentmethod : item,
+      //paymentmethod_title : item
+    })
+  }
+
+
+  // addCustomerinfo = (info) =>{
+
+
+  //   this.setState({
+  
+  //     customerinfo: customerinfo.push({info)  
+
+  //   })
+
+  // }
 
 
   onAddItem = (item) => {
@@ -100,8 +121,11 @@ class App extends Component {
     return (<CartContext.Provider
     value={{
       items: this.state.items,
+      paymentmethod:this.state.paymentmethod,
+      //paymentmethod_title:this.state.paymentmethod_title,
       addItem: this.onAddItem,
       removeItem: this.onRemoveItem,
+      addPayM: this.addPayM,
     }}
   >
       <AppContainer />

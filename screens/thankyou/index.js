@@ -9,7 +9,12 @@ export default class Thankyou extends React.Component {
     title: 'Order Completed',
   };
 
-  
+  constructor(props) {
+    super(props);
+    //const Categoryid = props.navigation.state.params.Categoryid;
+    console.log(props.navigation);
+    //data
+}
   
 
 render() {

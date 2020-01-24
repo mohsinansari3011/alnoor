@@ -1,7 +1,7 @@
 import React , {Component} from 'react'
 //import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { TextInput, KeyboardAvoidingView,  Button, ScrollView, View, Text, StyleSheet, 
-    FlatList, Image, TouchableOpacity , RadioButton } from 'react-native';
+    FlatList, Image, TouchableOpacity  } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 //import { ScrollView } from 'react-native';
 
@@ -32,7 +32,9 @@ class Checkout extends Component {
         cart:[],
         itemdetails:'',
         shipping_methods :[],
-        payment_gateways : [],
+        itemupdated : true,
+        payment_method : '',
+        payment_method_title : '',
 
      }
 
@@ -71,7 +73,7 @@ class Checkout extends Component {
     
 
      componentWillMount(){
-         //this.listofpayment_gateways();
+         
      }
     postCustomer = () => {
     const {
@@ -146,11 +148,13 @@ class Checkout extends Component {
         country,
         phone, 
         itemdetails,
+        payment_method,
+        payment_method_title
         } = this.state;
     
         const objOrder = `{
-            "payment_method": "bacs",
-            "payment_method_title": "Direct Bank Transfer",
+            "payment_method": "${payment_method}",
+            "payment_method_title": "${payment_method_title}",
             "set_paid": true,
             "billing": {
             "first_name": "${first_name}",
@@ -181,27 +185,35 @@ class Checkout extends Component {
               {
                 "method_id": "flat_rate",
                 "method_title": "Flat Rate",
-                "total": 10
+                "total": "10"
               }
             ]
           }`;
     
     
         const url = `${WooApi.url.wc}orders?consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
+        console.log(url);
         console.log(objOrder);
 
-        // axios.post(url,objOrder)
-        // .then(response => {
-        //     //this.postCustomer();
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+          };
+
+        axios.post(url,objOrder , axiosConfig)
+        .then(response => {
+            //this.postCustomer();
             
-        //     console.log('postobjOrder',response.data)
-        //     navigate("Thankyou")
-        //     //this.setState({ products: response.data })
-        //     })
-        // .catch(error => console.log('error',error));
+            console.log('postobjOrder',response.data)
+            navigate("Thankyou", {data: this.state})
+            //this.setState({ products: response.data })
+            })
+        .catch(error => console.log('error',error));
         }
 
-
+        
 
     handleEmail = (text) => {
     this.setState({ email: text })
@@ -239,17 +251,41 @@ class Checkout extends Component {
     }
 
 
-
-    
-     
+   
     getCartdata(cart){
+
+        itemd = [];
         cart.items.map((item) => {
-            this.state.itemdetails +=`{
+            itemd.push(`{
                 "product_id": ${item.id.toString()},
                 "quantity": ${item.quantity}
-                },`
+                }`)
+
+            // this.state.itemdetails +=`{
+            //     "product_id": ${item.id.toString()},
+            //     "quantity": ${item.quantity}
+            //     },`
         })
-                //console.log('cart---', this.state.itemdetails);
+
+        //console.log('empty--cart---',itemd);
+
+        //console.log('cart---',cart.paymentmethod);
+        // cart.paymentmethod ? cart.paymentmethod.map((item) =>{
+        //     this.setState({
+        //         payment_method : item.id,
+        //         payment_method_title : item.title
+        //     })
+        // }) : console.log('empty--cart---',cart.paymentmethod);
+
+             this.setState({
+                itemdetails : itemd,
+                payment_method : cart.paymentmethod.split(',')[0],
+                payment_method_title : cart.paymentmethod.split(',')[1],
+            })
+
+        this.setState({  itemupdated : false })
+
+                //console.log('cart---',cart.paymentmethod ,this.state.itemdetails);
     }
 
 
@@ -259,10 +295,11 @@ render(){
 
     
 
-    const {payment_gateways} = this.state;
+   
 
     return(
 
+        
         
         <KeyboardAvoidingView keyboardVerticalOffset = {Header.HEIGHT + 30} style={styles.container} behavior="padding" enabled>
         
@@ -272,7 +309,7 @@ render(){
         <CartContext.Consumer>
             {cart => {
                 if (cart.items && cart.items.length > 0) {
-                    this.getCartdata(cart);
+                   this.state.itemupdated ? this.getCartdata(cart) : ""
                 } 
             }}
         </CartContext.Consumer>
@@ -346,21 +383,7 @@ render(){
                keyboardType = "number-pad"
                onChangeText = {this.handlePhone}/>
 
-               <RadioButton.Group
-                onValueChange={value => this.setState({ value })}
-                value={this.state.value}
-            >
-      
-            {payment_gateways ? payment_gateways.map((item) =>{
-                return (<View>
-                    
-                    <Text>{item.title}</Text>
-                    <RadioButton value={item.id} />
-                    </View>)
-            }) : <Text>Empty</Text>
-
-            }
-            </RadioButton.Group>
+               
 
                <Button title="Submit" onPress={()=>{this.postOrder(this.props) }}></Button>
             
