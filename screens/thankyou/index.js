@@ -12,12 +12,21 @@ export default class Thankyou extends React.Component {
   constructor(props) {
     super(props);
     //const Categoryid = props.navigation.state.params.Categoryid;
-    console.log(props.navigation);
+    console.log('---myprops',props.navigation.state.params.data.first_name);
+    // state = {
+    //   userinfo : props.navigation.state.params.data
+    // }
     //data
 }
   
 
 render() {
+
+  const userinfo = this.props.navigation.state.params.data;
+
+ // console.log(this.state.userinfo)
+ //this.props.navigation.navigate("Dashboard")
+
   return (
     <CartContext.Consumer>
         
@@ -37,19 +46,26 @@ render() {
                 <Image style={styles.image} source={{ uri: item.image }} />
                 <Text style={styles.text}>{item.name}</Text>
                 <Text style={styles.text}>{`\n`}{item.quantity} x Rs{item.price}</Text>
-                <TouchableOpacity style={{ marginLeft: 'auto' }} onPress={() => cart.removeItem(item)}><Entypo name="cross" size={30} /></TouchableOpacity>
+                
               </View>
             }
           />;
           return (
             <View style={styles.container}>
-            <View style={{ marginTop: 5 }} ><Text style={styles.text}>Subtotal : Rs {subtotal}</Text></View> 
+            <View style={{ marginTop: 30 }} ><Text style={styles.text}>Subtotal : Rs {subtotal}</Text></View> 
              
             <ScrollView>{Items}</ScrollView>
+
+            <Text>{userinfo.first_name}</Text>
+            <Text>{userinfo.last_name}</Text>
+            <Text>{userinfo.email}</Text>
+
+
             <View style={{ marginTop: 20 , marginBottom: 10 }} >
                 <Text>Total Amount ----  Rs {subtotal} </Text>
                 <Text>Alnoor-{Math.round(Math.random() * 1000)} Your Order has been completed Successfully </Text>
-                <Button title="Proceed to Dashboard" onPress={()=>{this.props.navigation.navigate("Dashboard") }}></Button>
+                
+                <Button title="Proceed to Dashboard" onPress={()=>{  this.props.navigation.dismiss() }}></Button>
             </View>  
             </View>
           )
@@ -62,6 +78,7 @@ render() {
         }
       }}
     </CartContext.Consumer>
+
   );
 }
 }
