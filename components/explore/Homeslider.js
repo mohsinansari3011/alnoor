@@ -45,7 +45,7 @@ class Homeslider extends Component {
 
   fetchsliderImages = () => {
   const url = `${WooApi.url.wp}posts?filter[category_name]=app-main-slider`;
-  console.log(url);
+  //console.log(url);
   axios.get(url)
   .then(response => {
     this.setState({ sliderImages: response.data })

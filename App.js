@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, ToastAndroid , Text, View , Button ,Image , ScrollView, Dimensions , 
-  TouchableOpacity,
+  TouchableOpacity, AsyncStorage
 } from 'react-native';
 
 import { Platform } from 'react-native';
@@ -40,6 +40,12 @@ import HomeLatestProducts from './components/explore/HomeLatestProducts';
 import Paymentgateway from '../alnoor/screens/paymentgateways';
 import LatestProduct from './components/explore/LatestProduct';
 
+import LoginScreen from '../alnoor/screens/login';
+import SignupScreen from '../alnoor/screens/signup';
+import LogoutScreen from '../alnoor/screens/logout'
+import RegisterScreen from '../alnoor/screens/register';
+
+
 import { CartContext } from '../alnoor/context/CartContext';
 //import Totalcart from './screens/cart/totalcart';
 
@@ -51,26 +57,21 @@ class App extends Component {
     items: [],
     paymentmethod:'',
     customerinfo: [],
+    userData : []
     //paymentmethod_title:'',
   };
 
   addPayM = (item) =>{
     this.setState({
       paymentmethod : item,
-      //paymentmethod_title : item
     })
   }
 
 
   // addCustomerinfo = (info) =>{
-
-
   //   this.setState({
-  
   //     customerinfo: customerinfo.push({info)  
-
   //   })
-
   // }
 
 
@@ -117,7 +118,40 @@ class App extends Component {
     });
   }
 
+
+  componentDidMount(){
+    // try {
+    //   AsyncStorage.getItem('userData').then(response => {
+    //     const userData = JSON.parse(response);
+    //     // console.log('userid get response----', userData.id); 
+    //     // console.log('userid get response----', userData.username); 
+    //     // console.log('userid get response----', userData.name); 
+    //     // console.log('userid get response----', userData.email); 
+
+    //     this.setState({
+    //       userData
+    //     })
+    //     ToastAndroid.show(`${userData.username} has been logged...`, ToastAndroid.SHORT);
+    //       //navigate("Dashboard")
+          
+
+    //   }).catch(error => { console.log('errorget  AsyncStorage',error)
+    //   this.setState({
+    //     userData : []
+    //   })
+    // });
+
+    // } catch (error) {
+    //   // Error saving data
+    // }
+
+
+  }
+
+
   render() {
+    console.log('this.state.userData 1  ',this.state.userData)
+    console.log('this.state.lenght 1  ',this.state.userData? 'data true' : 'data false')
     return (<CartContext.Provider
     value={{
       items: this.state.items,
@@ -128,7 +162,9 @@ class App extends Component {
       addPayM: this.addPayM,
     }}
   >
-      <AppContainer />
+     {this.state.userData ?  <AppContainer1 /> :  <AppContainer />}
+
+
   </CartContext.Provider>);
   }
 }
@@ -220,10 +256,28 @@ const CartStackNavigator = createStackNavigator({
     screen: Thankyou
   },
   Paymentgateway: {
-    screen: Paymentgateway
+    screen: Paymentgateway 
   },
 
 })
+
+const RegisterStackNavigator = createStackNavigator({
+
+  Register: {
+    screen: RegisterScreen
+  },
+  Signup: {
+    screen: SignupScreen
+  },
+  Login: {
+    screen: LoginScreen
+  },
+  
+  
+ },{
+  initialRouteName: "Register"
+})
+
 const DashboardStackNavigator = createStackNavigator(
   {
     Dashboard : DashboardScreen,
@@ -308,6 +362,15 @@ const AppDrawerNavigator = createDrawerNavigator({
   Dashboard: {
     screen: DashboardStackNavigator
   },
+  Cart : CartStackNavigator,
+  
+  Register : RegisterStackNavigator,
+});
+
+const AppDrawerNavigator1 = createDrawerNavigator({
+  Dashboard: {
+    screen: DashboardStackNavigator
+  },
   
   Profile: {
     screen: Profile
@@ -315,19 +378,22 @@ const AppDrawerNavigator = createDrawerNavigator({
   Settings: {
     screen: Settings
   },
-  Cart : CartStackNavigator 
+  Cart : CartStackNavigator,
+
+  Logout : LogoutScreen,
 });
 
 const AppSwitchNavigator = createSwitchNavigator({
   //Welcome: { screen: WelcomeScreen },
   Dashboard: { screen: AppDrawerNavigator },
-  
-  
+});
+const AppSwitchNavigator1 = createSwitchNavigator({
+  //Welcome: { screen: WelcomeScreen },
+  Dashboard: { screen: AppDrawerNavigator1 },
 });
 
-
 const AppContainer = createAppContainer(AppSwitchNavigator);
-
+const AppContainer1 = createAppContainer(AppSwitchNavigator1);
 
 const styles = StyleSheet.create({
   // container: {
