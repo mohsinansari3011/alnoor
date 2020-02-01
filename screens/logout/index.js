@@ -2,7 +2,7 @@ import React , {Component} from 'react'
 import { TextInput, KeyboardAvoidingView,  Button, ScrollView, View, Text, StyleSheet, 
     FlatList, Image, TouchableOpacity , AsyncStorage  } from 'react-native';
 
-
+    import { CartContext } from '../../context/CartContext';
 
 
 
@@ -16,36 +16,40 @@ export default class Register extends Component {
 
 
 
-  componentDidMount(){
-    try {
-      AsyncStorage.removeItem('userData').then(response => {
-          console.log('removeItem',response);
-          this.props.navigation.navigate("Dashboard");
-      }).catch(error => console.log('removeItem  AsyncStorage',error));
+//   componentDidMount(){
+//     try {
+//       AsyncStorage.removeItem('userData').then(response => {
+//           console.log('removeItem',response);
+//           this.props.navigation.navigate("Dashboard");
+//       }).catch(error => console.log('removeItem  AsyncStorage',error));
 
-    } catch (error) {
-        this.props.navigation.navigate("Dashboard");
-    }
+//     } catch (error) {
+//         this.props.navigation.navigate("Dashboard");
+//     }
 
-  }
+//   }
 
-logout(){
-    try {
-        AsyncStorage.removeItem('userData').then(response => {
-            console.log('removeItem',response);
-            this.props.navigation.navigate("Dashboard");
-        }).catch(error => console.log('removeItem  AsyncStorage',error));
+// logout(){
+//     try {
+//         AsyncStorage.removeItem('userData').then(response => {
+//             console.log('removeItem',response);
+//             this.props.navigation.navigate("Dashboard");
+//         }).catch(error => console.log('removeItem  AsyncStorage',error));
   
-      } catch (error) {
-          this.props.navigation.navigate("Dashboard");
-      }
-}
+//       } catch (error) {
+//           this.props.navigation.navigate("Dashboard");
+//       }
+// }
 
     render() {
       return (
        <View style = {styles.container}>
-             <Text>Loading.......</Text>
-             {this.logout()}
+       <CartContext>
+       {cart=>{
+         
+         return <Button title="Logout" onPress={() => cart.LogoutUser()}></Button>
+       }}
+       </CartContext>
         </View>
       );
     }

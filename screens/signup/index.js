@@ -49,15 +49,19 @@ export default class Signup extends Component {
 
           try {
             AsyncStorage.getItem('userData').then(response => {
-              const userData = JSON.parse(response);
-              console.log('userid get response----', userData); 
-              // console.log('userid get response----', userData.id); 
-              // console.log('userid get response----', userData.username); 
-              // console.log('userid get response----', userData.name); 
-              // console.log('userid get response----', userData.email); 
 
-              ToastAndroid.show(`${userData.username} has been registerd...`, ToastAndroid.SHORT);
-                //navigate("Dashboard")
+              if(response != null){
+                const userData = JSON.parse(response);
+                console.log('userid get response----', userData); 
+                // console.log('userid get response----', userData.id); 
+                // console.log('userid get response----', userData.username); 
+                // console.log('userid get response----', userData.name); 
+                // console.log('userid get response----', userData.email); 
+
+                ToastAndroid.show(`${userData.username} has been registerd...`, ToastAndroid.SHORT);
+                  //navigate("Dashboard")
+              }
+              
 
             }).catch(error => console.log('errorget  AsyncStorage',error));
 

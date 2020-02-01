@@ -2,11 +2,7 @@ import React , {Component} from 'react'
 //import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { TextInput, KeyboardAvoidingView,  Button, ScrollView, View, ToastAndroid, StyleSheet, 
     FlatList, Image, TouchableOpacity , AsyncStorage  } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
-//import { ScrollView } from 'react-native';
 
-import axios from 'axios';
-import WooApi from '../../components/config/wooapi';  
 import { CartContext } from '../../context/CartContext';
 import { Header } from 'react-navigation-stack';
 
@@ -26,7 +22,7 @@ export default class Login extends Component {
     username: '',
     password: '',
     
-
+    
 
  }
 
@@ -39,74 +35,81 @@ export default class Login extends Component {
       this.setState({ username: text })
       }
 
-     onLogin = () => {
-      const { navigate } = this.props.navigation;
-      const {
-      password ,
-      username,
-      } = this.state;
+    //  onLogin = () => {
+    //   const { navigate } = this.props.navigation;
+    //   const {
+    //   password ,
+    //   username,
+    //   } = this.state;
   
       
   
-      //const Userurl = `${WooApi.url.wp}users/12`;
-      const url = `${WooApi.url.wplogin}?username=${username}&password=${password}`;
-      const axiosConfig = {
-          headers: {
-              'Content-Type': 'application/json;charset=UTF-8',
-              'Authorization': `Basic ${WooApi.auth.base64}`,
-              "Access-Control-Allow-Origin": "*",
-          }
-        };
+    //   //const Userurl = `${WooApi.url.wp}users/12`;
+    //   const url = `${WooApi.url.wplogin}?username=${username}&password=${password}`;
+    //   const axiosConfig = {
+    //       headers: {
+    //           'Content-Type': 'application/json;charset=UTF-8',
+    //           'Authorization': `Basic ${WooApi.auth.base64}`,
+    //           "Access-Control-Allow-Origin": "*",
+    //       }
+    //     };
 
-       // console.log(url);
-      axios.get(url, axiosConfig)
-      .then(response => {
-        let loginData = response.data;
-         try {
+    //    // console.log(url);
+    //   axios.get(url, axiosConfig)
+    //   .then(response => {
+    //     let loginData = response.data;
+    //      try {
 
 
-         // console.log('Login id',loginData.ID);
+    //      // console.log('Login id',loginData.ID);
 
-          if(loginData.ID != undefined){
+    //       if(loginData.ID != undefined){
 
-            let userData = {
-              "id": loginData.ID,
-              "first_name": "",
-              "last_name": "",
-              "name": loginData.data.user_nicename,
-              "nickname": loginData.data.user_nicename,
-              "email": loginData.data.user_email,
-              "username": loginData.data.user_login,
-            }
+    //         let userData = {
+    //           "id": loginData.ID,
+    //           "first_name": "",
+    //           "last_name": "",
+    //           "name": loginData.data.user_nicename,
+    //           "nickname": loginData.data.user_nicename,
+    //           "email": loginData.data.user_email,
+    //           "username": loginData.data.user_login,
+    //         }
 
-            //console.log(JSON.stringify(userData));
-                try {
-              AsyncStorage.setItem('userData', JSON.stringify(userData)).then(response => {
-                ToastAndroid.show(`${userData.username} has been registerd...`, ToastAndroid.SHORT);
-                navigate("Dashboard")
+    //         //console.log(JSON.stringify(userData));
+    //             try {
+    //           AsyncStorage.setItem('userData', JSON.stringify(userData)).then(response => {
+    //             ToastAndroid.show(`${userData.username} has been registerd...`, ToastAndroid.SHORT);
+                
+               
 
-              }).catch(error => console.log('error AsyncStorage',error));
+    //             console.log(userData);
 
-            } catch (error) {
-            }
+               
+    //             //navigate("Dashboard")
+
+    //           }).catch(error => console.log('error AsyncStorage',error));
+
+    //         } catch (error) {
+    //         }
 
               
             
 
 
-          }
-        } catch (error) {
-          // Error saving data
-        }
+    //       }
+    //     } catch (error) {
+    //       // Error saving data
+    //     }
 
 
-          })
-      .catch(error => console.log('error Signup',error));
-      }
+    //       })
+    //   .catch(error => console.log('error Signup',error));
+    //   }
 
     render() {
       return (
       
+        
         <KeyboardAvoidingView keyboardVerticalOffset = {Header.HEIGHT + 30} style={styles.container} behavior="padding" enabled>
         <ScrollView>
        <View style = {styles.container}>
@@ -129,10 +132,15 @@ export default class Login extends Component {
                
 
 
+            
               
 
-
-               <Button title="Login" onPress={this.onLogin}></Button>
+                 <CartContext>
+                 {cart=>{
+                   
+                   return <Button title="Login" onPress={() => cart.LoginUser(this.state.username,this.state.password)}></Button>
+                 }}
+                 </CartContext>
                
                </View>
 

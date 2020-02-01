@@ -1,13 +1,6 @@
 import React , {Component} from 'react'
-//import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { TextInput, KeyboardAvoidingView,  Button, ScrollView, View, ToastAndroid, StyleSheet, 
     FlatList, Image, TouchableOpacity , AsyncStorage  } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
-//import { ScrollView } from 'react-native';
-
-import axios from 'axios';
-import WooApi from '../../components/config/wooapi';  
-import { CartContext } from '../../context/CartContext';
 import { Header } from 'react-navigation-stack';
 
 

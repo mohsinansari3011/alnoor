@@ -47,7 +47,8 @@ import RegisterScreen from '../alnoor/screens/register';
 
 
 import { CartContext } from '../alnoor/context/CartContext';
-//import Totalcart from './screens/cart/totalcart';
+import axios from 'axios';
+import WooApi from '../alnoor/components/config/wooapi';  
 
 
 class App extends Component {
@@ -67,12 +68,126 @@ class App extends Component {
     })
   }
 
+  LoginUser = (username,password) =>{
+   
+    //const Userurl = `${WooApi.url.wp}users/12`;
+    const url = `${WooApi.url.wplogin}?username=${username}&password=${password}`;
+    const axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Authorization': `Basic ${WooApi.auth.base64}`,
+            "Access-Control-Allow-Origin": "*",
+        }
+      };
 
-  // addCustomerinfo = (info) =>{
-  //   this.setState({
-  //     customerinfo: customerinfo.push({info)  
-  //   })
-  // }
+     // console.log(url);
+    axios.get(url, axiosConfig)
+    .then(response => {
+      let loginData = response.data;
+       try {
+
+
+       // console.log('Login id',loginData.ID);
+
+        if(loginData.ID != undefined){
+
+          let userDataR = {
+            "id": loginData.ID,
+            "first_name": "",
+            "last_name": "",
+            "name": loginData.data.user_nicename,
+            "nickname": loginData.data.user_nicename,
+            "email": loginData.data.user_email,
+            "username": loginData.data.user_login,
+          }
+
+          //console.log(JSON.stringify(userData));
+              try {
+            AsyncStorage.setItem('userData', JSON.stringify(userDataR)).then(response => {
+              ToastAndroid.show(`${userDataR.username} has been Loggedin!!...`, ToastAndroid.SHORT);
+              
+              console.log('11====',userDataR);
+
+              this.setState({
+                userData : userDataR
+              })
+
+              
+
+             
+              //navigate("Dashboard")
+
+            }).catch(error => console.log('error AsyncStorage',error));
+
+          } catch (error) {
+          }
+
+            
+          
+
+
+        }
+      } catch (error) {
+        // Error saving data
+      }
+
+
+        })
+    .catch(error => console.log('error Signup',error));
+    }
+
+  LogoutUser =() => {
+
+    try {
+      AsyncStorage.removeItem('userData').then(response => {
+          console.log('removeItem',response);
+          this.setState({
+            userData : {}
+          })
+      }).catch(error => console.log('removeItem  AsyncStorage',error));
+    } catch (error) {
+    }
+    
+
+  }
+  
+  SignupUser = (username,email,password) => {
+
+    const objRegister = `{"username" : "${username}", "email": "${email}", "password": "${password}"}`;
+    const url = `${WooApi.url.wp}users`;
+    let axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Authorization': `Basic ${WooApi.auth.base64}`,
+            "Access-Control-Allow-Origin": "*",
+        }
+      };
+
+    axios.post(url,objRegister , axiosConfig)
+    .then(response => {
+      let userData = response.data;
+       try {
+        AsyncStorage.setItem('userData', JSON.stringify(userData)).then(response => {
+          console.log('signup response----', response); 
+          ToastAndroid.show(`${userData.username} has been registerd...`, ToastAndroid.SHORT);
+
+          this.setState({
+            userData : userData
+          })
+
+
+         // navigate("Dashboard")
+
+        }).catch(error => console.log('error AsyncStorage',error));
+
+      } catch (error) {
+        // Error saving data
+      }
+
+
+        })
+    .catch(error => console.log('error Signup',error));
+    }
 
 
   onAddItem = (item) => {
@@ -120,38 +235,45 @@ class App extends Component {
 
 
   componentDidMount(){
-    // try {
-    //   AsyncStorage.getItem('userData').then(response => {
-    //     const userData = JSON.parse(response);
-    //     // console.log('userid get response----', userData.id); 
-    //     // console.log('userid get response----', userData.username); 
-    //     // console.log('userid get response----', userData.name); 
-    //     // console.log('userid get response----', userData.email); 
 
-    //     this.setState({
-    //       userData
-    //     })
-    //     ToastAndroid.show(`${userData.username} has been logged...`, ToastAndroid.SHORT);
-    //       //navigate("Dashboard")
+    console.log('app.js componentDidMount');
+    try {
+      AsyncStorage.getItem('userData').then(response => {
+        console.log('response----',response); 
+        if(response != null){
+
+          const userData = JSON.parse(response);
+          // console.log('userid get response----', userData.id); 
+          // console.log('userid get response----', userData.username); 
+          // console.log('userid get response----', userData.name); 
+          // console.log('userid get response----', userData.email); 
+
+          this.setState({
+            userData
+          })
+          ToastAndroid.show(`${userData.username} has been already logged...`, ToastAndroid.SHORT);
+            //this.props.navigate.navigate("Dashboard")
+
+        }
+        
+        
           
 
-    //   }).catch(error => { console.log('errorget  AsyncStorage',error)
-    //   this.setState({
-    //     userData : []
-    //   })
-    // });
+      }).catch(error => { console.log('errorget  AsyncStorage',error)
+      this.setState({
+        userData : {}
+      })
+    });
 
-    // } catch (error) {
-    //   // Error saving data
-    // }
+    } catch (error) {
+      // Error saving data
+    }
 
 
   }
 
 
   render() {
-    console.log('this.state.userData 1  ',this.state.userData)
-    console.log('this.state.lenght 1  ',this.state.userData? 'data true' : 'data false')
     return (<CartContext.Provider
     value={{
       items: this.state.items,
@@ -160,10 +282,13 @@ class App extends Component {
       addItem: this.onAddItem,
       removeItem: this.onRemoveItem,
       addPayM: this.addPayM,
+      LoginUser: this.LoginUser,
+      LogoutUser : this.LogoutUser,
+      SignupUser : this.SignupUser,
     }}
   >
-     {this.state.userData ?  <AppContainer1 /> :  <AppContainer />}
-
+    
+     {this.state.userData && this.state.userData.username  != undefined ? <AppContainer1/> : <AppContainer/>}
 
   </CartContext.Provider>);
   }
