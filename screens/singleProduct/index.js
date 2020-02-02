@@ -4,6 +4,7 @@ import HTMLView from 'react-native-htmlview';
 
 import { CartContext } from '../../context/CartContext';
 
+
 export default class SingleProduct extends React.Component {
     static navigationOptions = ({ navigation }) => ({
         //title: navigation.state.params.product.name

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Icon from "react-native-vector-icons/Feather";
+
 import { Text, View , Image ,   
     SafeAreaView,
     TouchableOpacity, ScrollView , 
@@ -64,34 +66,69 @@ class HomeCategories extends Component {
       }
 
       renderItem = ({item}) => (
-        <TouchableOpacity 
+   
+   
+   
+          <TouchableOpacity 
         onPress={() => this.props.navigation.navigate("CatProducts", { Categoryid: item.id })}>
         
-     
-        <View style={[styles.container, styles.materialCardWithImageAndTitle1]}>
-        <View style={styles.rect}>
-          <View style={styles.imageRow}>
-          {item.image ?  <Image
-            source={{ uri: item.images }}
-            resizeMode="contain"
-            style={styles.image}
-          ></Image> :  <Image
-            source={require("../../assets/images/01.jpg")}
-            resizeMode="contain"
-            style={styles.image}
-          ></Image>}
-         
-            <View style={styles.rs1550Stack}>
-              <Text style={styles.rs1550}>{entities.decode(item.name)}</Text>
-              <Text style={styles.text}>{entities.decode(item.description)}</Text>
-            </View>
-            <View style={styles_text.container}>
-              <Text style={styles_text.text2}>&gt;</Text>
+        
+          <View style={styles_cat.container}>
+            <View style={styles_cat.rect89}>
+              <View style={styles_cat.rect92632222223232Row}>
+                
+                <View style={styles_cat.rect92632222223232}>
+                {item.image ?  <Image
+                  source={{ uri: item.image }}
+                  resizeMode="contain"
+                  style={styles_cat.category_image}
+                ></Image> :  <Image
+                  source={require("../../assets/images/catimg.jpg")}
+                  resizeMode="contain"
+                  style={styles_cat.category_image}
+                ></Image>}
+
+                </View>
+
+
+
+                <View style={styles_cat.categoryNameStack}>
+                  <Text style={styles_cat.categoryName}>{entities.decode(item.name)}</Text>
+                  <Icon name="arrow-right" style={styles_cat.icon}></Icon>
+                </View>
+              </View>
             </View>
           </View>
-        </View>
-      </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      
+      //   <TouchableOpacity 
+      //   onPress={() => this.props.navigation.navigate("CatProducts", { Categoryid: item.id })}>
+        
+     
+      //   <View style={[styles.container, styles.materialCardWithImageAndTitle1]}>
+      //   <View style={styles.rect}>
+      //     <View style={styles.imageRow}>
+      //     {item.image ?  <Image
+      //       source={{ uri: item.images }}
+      //       resizeMode="contain"
+      //       style={styles.image}
+      //     ></Image> :  <Image
+      //       source={require("../../assets/images/01.jpg")}
+      //       resizeMode="contain"
+      //       style={styles.image}
+      //     ></Image>}
+         
+      //       <View style={styles.rs1550Stack}>
+      //         <Text style={styles.rs1550}>{entities.decode(item.name)}</Text>
+      //         <Text style={styles.text}>{entities.decode(item.description)}</Text>
+      //       </View>
+      //       <View style={styles_text.container}>
+      //         <Text style={styles_text.text2}>&gt;</Text>
+      //       </View>
+      //     </View>
+      //   </View>
+      // </View>
+      // </TouchableOpacity>
       )
 
 
@@ -289,6 +326,63 @@ const stylesb = StyleSheet.create({
       height: 200,
     },
 });
+
+
+const styles_cat = StyleSheet.create({
+  container: {
+    width: screenWidth,
+    height: 75
+  },
+  rect89: {
+    width: screenWidth,
+    height: 73,
+    backgroundColor: "rgba(230, 230, 230,1)",
+    flexDirection: "row",
+    // marginLeft: -1
+  },
+  rect92632222223232: {
+    width: 75,
+    height: 75,
+    backgroundColor: "rgba(128,128,128,1)"
+  },
+  category_image : {
+    width: 75,
+    height: 75
+  },
+  categoryName: {
+    top: 10,
+    left: 0,
+    width: 220,
+    // height: 16,
+    color: "rgba(0,0,0,1)",
+    position: "absolute",
+    fontSize: 18,
+    // fontFamily: "roboto-regular"
+  },
+  icon: {
+    top: 0,
+    left: screenWidth - 150,
+    position: "absolute",
+    color: "rgba(100,177,12,1)",
+    fontSize: 40,
+    height: 40,
+    width: 40
+  },
+  categoryNameStack: {
+    width: 245,
+    height: 40,
+    marginLeft: 21,
+    marginTop: 16
+  },
+  rect92632222223232Row: {
+    height: 72,
+    flexDirection: "row",
+    flex: 1,
+    marginRight: 9,
+    marginLeft: 2
+  }
+});
+
 
 
 export default HomeCategories;

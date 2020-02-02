@@ -37,14 +37,14 @@ import Location from '../alnoor/screens/location';
 import Homeslider from './components/explore/Homeslider';
 import HomeCategories from './components/explore/HomeCategories';
 import HomeLatestProducts from './components/explore/HomeLatestProducts';
-import Paymentgateway from '../alnoor/screens/paymentgateways';
+import Paymentgateway from '../alnoor/screens/expaymentgateways';
 import LatestProduct from './components/explore/LatestProduct';
 
 import LoginScreen from '../alnoor/screens/login';
 import SignupScreen from '../alnoor/screens/signup';
 import LogoutScreen from '../alnoor/screens/logout'
 import RegisterScreen from '../alnoor/screens/register';
-
+import Homesreen from '../alnoor/screens/homescreen';
 
 import { CartContext } from '../alnoor/context/CartContext';
 import axios from 'axios';
@@ -306,13 +306,18 @@ class DashboardScreen extends Component {
       <Homeslider />
     
       <View style={{marginTop:5}}>
-      <View ><Text style={{ textAlign: 'center',}}>Latest Products</Text></View>
-      <Button color="#05a5d1" title="View More" onPress={() => this.props.navigation.navigate("Products")} />
+      <View >
+        <Text style={{ textAlign: 'center',}}>Latest Products</Text></View>
+        {/* <Button color="#05a5d1" title="View More" onPress={() => this.props.navigation.navigate("Products")} /> */}
       </View>
       <LatestProduct navigation = {this.props.navigation}/>
+      <View style={{marginBottom:10, marginTop:5}}>
+        <Button color="rgba(100,177,12,1)" title="View More" onPress={() => this.props.navigation.navigate("Products")}  />
+      </View>
       
       <HomeCategories navigation = {this.props.navigation}/>
 
+      
       </ScrollView>
     );
   }
@@ -435,13 +440,16 @@ const DashboardStackNavigator = createStackNavigator(
       headerTitleStyle : {
               alignSelf: 'center' ,
               textAlign: 'center',
-              flex:1
+              justifyContent: 'center',
+              flex:1,
+              width:screenWidth
       },
       headerTitle: (
       
       <TouchableOpacity onPress={() => navigation.navigate('Dashboard')} >
         <Image  
-        style={{ width: 220, height: 50 }} source={require('./assets/images/al-noor.png')}/>
+        style={{ width: 280, height: 50 }} 
+        source={require('./assets/images/al-noor.png')}/>
         
       </TouchableOpacity>
       

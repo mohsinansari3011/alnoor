@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { StyleSheet, ScrollView , View, Image, Text , FlatList, TouchableOpacity} from "react-native";
+import { StyleSheet, ScrollView , View, Image, Text , FlatList, TouchableOpacity, Dimensions, ImageBackground  } from "react-native";
 //import MaterialButtonDanger from "../material/Button";
-
+const { width: screenWidth } = Dimensions.get('window')
 import axios from 'axios';
 
 import WooApi from '../../components/config/wooapi';  
@@ -12,7 +12,7 @@ class LatestProduct extends Component {
       }
 
     fetchProducts = () => {
-    const url = `${WooApi.url.wc}products?per_page=5&consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
+    const url = `${WooApi.url.wc}products?per_page=10&consumer_key=${WooApi.keys.consumerKey}&consumer_secret=${WooApi.keys.consumerSecret}`;
     //console.log(url);
     axios.get(url)
     .then(response => this.setState({ products: response.data }))
@@ -27,26 +27,62 @@ class LatestProduct extends Component {
       }
 
       renderItem = ({item}) => (
-        <View style={[styles.container, styles.materialCardWithImageAndTitle1]}>
-            <View style={styles.rect}>
-              <Image
+
+
+        <View style={styles_product.container}>
+          <View style={styles_product.rect926322222}>
+
+         
+          <ImageBackground
               source={{ uri: item.images[0].src }}
                 resizeMode="contain"
-                style={styles.image}
-              ></Image>
-              <View style={styles.rs1550Row}>
-                <Text style={styles.rs1550}>Rs {item.price}</Text>
-                <Text style={styles.rs15503}>Rs {(parseFloat(item.price) + 200)}</Text>
-              </View>
-              <Text style={styles.loremIpsum}>
-              {item.name}
-              </Text>
-              <TouchableOpacity style={[stylesb.container, styles.materialButtonDanger]}
-              onPress={() => this.props.navigation.navigate("Product", { product: item })}>
-              <Text style={styles.caption}>Add</Text>
-            </TouchableOpacity>
+                style={styles_product.product_thumb}
+              >
+<View style={styles_product.rect946322222}>
+              <Text style={styles_product.rs75003362}>Rs {item.price}</Text>
             </View>
+                
+              </ImageBackground>
+              {/* { item.images[0].src ?  <Image
+                  source={{ uri: item.images[0].src }}
+                  resizeMode="contain"
+                  style={styles_product.product_thumb}
+                ></Image> :  <Image
+                  source={require("../../assets/images/catimg.jpg")}
+                  resizeMode="contain"
+                  style={styles_product.product_thumb}
+                ></Image>}
+ */}
+
+
+            
           </View>
+          <View style={styles_product.rect936322222}>
+            <Text style={styles_product.buy222}>VIEW</Text>
+          </View>
+      </View>
+
+
+        // <View style={[styles.container, styles.materialCardWithImageAndTitle1]}>
+        //     <View style={styles.rect}>
+        //       <Image
+        //       source={{ uri: item.images[0].src }}
+        //         resizeMode="contain"
+        //         style={styles.image}
+        //       ></Image>
+        //       <View style={styles.rs1550Row}>
+        //         <Text style={styles.rs1550}>Rs {item.price}</Text>
+        //         <Text style={styles.rs15503}>Rs {(parseFloat(item.price) + 200)}</Text>
+        //       </View>
+        //       <Text style={styles.loremIpsum}>
+        //       {item.name}
+        //       </Text>
+        //       <TouchableOpacity style={[stylesb.container, styles.materialButtonDanger]}
+        //       onPress={() => this.props.navigation.navigate("Product", { product: item })}>
+        //       <Text style={styles.caption}>Add</Text>
+        //     </TouchableOpacity>
+        //     </View>
+        //   </View>
 
       )
 
@@ -55,7 +91,7 @@ class LatestProduct extends Component {
         return (
            
 
-            <View style={{height : 200, marginTop:5}}>
+            <View style={{width:screenWidth, height : 200, marginTop:5, marginLeft:4, marginBottom:5}}>
                 <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator ={false}
@@ -65,7 +101,7 @@ class LatestProduct extends Component {
                     this.state.products.length ?
                     <FlatList
                     //contentContainerStyle={prostyles.list} 
-                    numColumns={10}
+                    numColumns={5}
                     data={this.state.products}
                     keyExtractor={ item => item.id.toString() }
                     renderItem={this.renderItem}
@@ -207,4 +243,52 @@ const stylesb = StyleSheet.create({
       },
   });
 
+  const styles_product = StyleSheet.create({
+    container: {
+      width: 79,
+      height: 99,
+      marginRight: 5,
+      marginBottom : 5,
+      borderRadius: 4,
+      borderWidth: 0.5,
+      borderColor: "rgba(100,177,12,1)",
+    },
+    rect926322222: {
+      width: 79,
+      height: 72,
+      backgroundColor: "#fff"
+    },
+    product_thumb:{
+      width: 79,
+      height: 72
+    },
+    rect946322222: {
+      width: 79,
+      height: 12,
+      backgroundColor: "rgba(91,91,91,0.36)",
+      marginTop: 60
+    },
+    rs75003362: {
+      color: "rgba(0,0,0,1)",
+      fontSize: 12,
+      // fontFamily: "roboto-regular"
+    },
+    rect936322222: {
+      width: 79,
+      height: 28,
+      backgroundColor: "rgba(100,177,12,1)",
+      justifyContent: "center"
+    },
+    buy222: {
+      color: "rgba(255,255,255,1)",
+      fontSize: 18,
+      // fontFamily: "roboto-700",
+      alignSelf: "center"
+    }
+  });
+  
+  
+
+
 export default LatestProduct;
+
