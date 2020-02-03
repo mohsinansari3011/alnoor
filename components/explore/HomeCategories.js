@@ -100,35 +100,6 @@ class HomeCategories extends Component {
             </View>
           </View>
         </TouchableOpacity>
-      
-      //   <TouchableOpacity 
-      //   onPress={() => this.props.navigation.navigate("CatProducts", { Categoryid: item.id })}>
-        
-     
-      //   <View style={[styles.container, styles.materialCardWithImageAndTitle1]}>
-      //   <View style={styles.rect}>
-      //     <View style={styles.imageRow}>
-      //     {item.image ?  <Image
-      //       source={{ uri: item.images }}
-      //       resizeMode="contain"
-      //       style={styles.image}
-      //     ></Image> :  <Image
-      //       source={require("../../assets/images/01.jpg")}
-      //       resizeMode="contain"
-      //       style={styles.image}
-      //     ></Image>}
-         
-      //       <View style={styles.rs1550Stack}>
-      //         <Text style={styles.rs1550}>{entities.decode(item.name)}</Text>
-      //         <Text style={styles.text}>{entities.decode(item.description)}</Text>
-      //       </View>
-      //       <View style={styles_text.container}>
-      //         <Text style={styles_text.text2}>&gt;</Text>
-      //       </View>
-      //     </View>
-      //   </View>
-      // </View>
-      // </TouchableOpacity>
       )
 
 

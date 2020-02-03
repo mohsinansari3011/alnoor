@@ -31,8 +31,6 @@ class LatestProduct extends Component {
 
         <View style={styles_product.container}>
           <View style={styles_product.rect926322222}>
-
-         
           <ImageBackground
               source={{ uri: item.images[0].src }}
                 resizeMode="contain"
@@ -43,46 +41,13 @@ class LatestProduct extends Component {
             </View>
                 
               </ImageBackground>
-              {/* { item.images[0].src ?  <Image
-                  source={{ uri: item.images[0].src }}
-                  resizeMode="contain"
-                  style={styles_product.product_thumb}
-                ></Image> :  <Image
-                  source={require("../../assets/images/catimg.jpg")}
-                  resizeMode="contain"
-                  style={styles_product.product_thumb}
-                ></Image>}
- */}
-
-
-            
           </View>
           <View style={styles_product.rect936322222}>
-            <Text style={styles_product.buy222}>VIEW</Text>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate("Product", { product: item })}>
+          <Text style={styles_product.buy222}>VIEW</Text>
+        </TouchableOpacity>
           </View>
       </View>
-
-
-        // <View style={[styles.container, styles.materialCardWithImageAndTitle1]}>
-        //     <View style={styles.rect}>
-        //       <Image
-        //       source={{ uri: item.images[0].src }}
-        //         resizeMode="contain"
-        //         style={styles.image}
-        //       ></Image>
-        //       <View style={styles.rs1550Row}>
-        //         <Text style={styles.rs1550}>Rs {item.price}</Text>
-        //         <Text style={styles.rs15503}>Rs {(parseFloat(item.price) + 200)}</Text>
-        //       </View>
-        //       <Text style={styles.loremIpsum}>
-        //       {item.name}
-        //       </Text>
-        //       <TouchableOpacity style={[stylesb.container, styles.materialButtonDanger]}
-        //       onPress={() => this.props.navigation.navigate("Product", { product: item })}>
-        //       <Text style={styles.caption}>Add</Text>
-        //     </TouchableOpacity>
-        //     </View>
-        //   </View>
 
       )
 

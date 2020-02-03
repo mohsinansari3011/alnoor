@@ -37,7 +37,7 @@ import Location from '../alnoor/screens/location';
 import Homeslider from './components/explore/Homeslider';
 import HomeCategories from './components/explore/HomeCategories';
 import HomeLatestProducts from './components/explore/HomeLatestProducts';
-import Paymentgateway from '../alnoor/screens/expaymentgateways';
+import Paymentgateway from '../alnoor/screens/paymentgateways';
 import LatestProduct from './components/explore/LatestProduct';
 
 import LoginScreen from '../alnoor/screens/login';
@@ -236,7 +236,7 @@ class App extends Component {
 
   componentDidMount(){
 
-    console.log('app.js componentDidMount');
+    //console.log('app.js componentDidMount');
     try {
       AsyncStorage.getItem('userData').then(response => {
         console.log('response----',response); 
@@ -299,12 +299,22 @@ export default App;
 
 class DashboardScreen extends Component {
 
+  state = {
+    loader: false,
+    slider : false,
+    product : false,
+    category : false,
+  }
+
+
+
   render() {
     return (
-      <ScrollView>
+      this.state.loader ?   <View style={{textAlign:'center'}}>
+      <Image source={ require('./assets/images/cart-loading.gif') }/>
+      </View> :  <ScrollView>
   
       <Homeslider />
-    
       <View style={{marginTop:5}}>
       <View >
         <Text style={{ textAlign: 'center',}}>Latest Products</Text></View>
@@ -319,7 +329,12 @@ class DashboardScreen extends Component {
 
       
       </ScrollView>
-    );
+      
+
+     
+
+
+      );
   }
 }
 
@@ -435,7 +450,7 @@ const DashboardStackNavigator = createStackNavigator(
      return{
       headerStyle: {                                                                                        
         backgroundColor: 'light-grey',  
-        //height : 100                                                                         
+        height : 65                                                                         
       },
       headerTitleStyle : {
               alignSelf: 'center' ,
@@ -448,7 +463,7 @@ const DashboardStackNavigator = createStackNavigator(
       
       <TouchableOpacity onPress={() => navigation.navigate('Dashboard')} >
         <Image  
-        style={{ width: 280, height: 50 }} 
+        style={{ width: 280, height: 60 }} 
         source={require('./assets/images/al-noor.png')}/>
         
       </TouchableOpacity>
