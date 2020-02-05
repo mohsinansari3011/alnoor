@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity, Dimensions } from "react-native";
 import HTMLView from 'react-native-htmlview';
-
+import designVars from '../../components/config/design_variables';  
 import { CartContext } from '../../context/CartContext';
-
+const { width: screenWidth } = Dimensions.get('window')
 
 export default class SingleProduct extends React.Component {
     static navigationOptions = ({ navigation }) => ({
@@ -130,31 +130,31 @@ const styles = StyleSheet.create({
     },
     button: {
         alignItems: 'center',
-        backgroundColor: '#05a5d1',
+        backgroundColor: designVars.primary_color,
         padding: 10,
-        width: 150,
+        width: (screenWidth - 190),
         height: 40,
         marginLeft: 20,
-        borderBottomLeftRadius: 17,
-        borderBottomRightRadius: 17,
-        borderTopLeftRadius: 17,
-        borderTopRightRadius: 17,
+        // borderBottomLeftRadius: 17,
+        // borderBottomRightRadius: 17,
+        // borderTopLeftRadius: 17,
+        // borderTopRightRadius: 17,
     },
     decreaseButton: {
         height: 40,
         width: 30,
         padding: 10,
         backgroundColor: 'rgba(27,31,35,0.05)',
-        borderBottomLeftRadius: 17,
-        borderTopLeftRadius: 17,
+        // borderBottomLeftRadius: 17,
+        // borderTopLeftRadius: 17,
     },
     increaseButton: {
         height: 40,
         width: 30,
         padding: 8,
         backgroundColor: 'rgba(27,31,35,0.05)',
-        borderBottomRightRadius: 17,
-        borderTopRightRadius: 17,
+        // borderBottomRightRadius: 17,
+        // borderTopRightRadius: 17,
     },
     description: {
         fontSize: 14,

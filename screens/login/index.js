@@ -17,6 +17,11 @@ export default class Login extends Component {
     title: 'Login',
   };
 
+  constructor(props) {
+    super(props);
+    
+
+  }
 
   state = {
     username: '',
@@ -107,6 +112,7 @@ export default class Login extends Component {
     //   }
 
     render() {
+      //const route = props.navigation.state.params.route;
       return (
       
         

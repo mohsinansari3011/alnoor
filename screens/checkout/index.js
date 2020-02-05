@@ -1,7 +1,7 @@
 import React , {Component} from 'react'
 //import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { TextInput, KeyboardAvoidingView,  Button, ScrollView, View, Text, StyleSheet, 
-    FlatList, Image, TouchableOpacity  } from 'react-native';
+    FlatList, Image, TouchableOpacity,Dimensions  } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 //import { ScrollView } from 'react-native';
 
@@ -9,7 +9,8 @@ import axios from 'axios';
 import WooApi from '../../components/config/wooapi';  
 import { CartContext } from '../../context/CartContext';
 import { Header } from 'react-navigation-stack';
-
+import designVars from '../../components/config/design_variables';  
+const { width: screenWidth } = Dimensions.get('window')
 
 class Checkout extends Component {
     static navigationOptions = {
@@ -35,6 +36,7 @@ class Checkout extends Component {
         itemupdated : true,
         payment_method : '',
         payment_method_title : '',
+        user : [],
 
      }
 
@@ -136,56 +138,59 @@ class Checkout extends Component {
     postOrder = (props) => {
         const { navigate } = props.navigation;
         const {
-        email,
-        password ,
-        first_name,
-        last_name,
-        username,
+        // email,
+        // password ,
+        // first_name,
+        // last_name,
+        // username,
         address_1,
-        city,
-        state,
-        postcode,
-        country,
+        // city,
+        // state,
+        // postcode,
+        // country,
         phone, 
         itemdetails,
         payment_method,
-        payment_method_title
+        payment_method_title,
+        user
         } = this.state;
     
         const objOrder = `{
+            "customer_id": ${user.id},
+            "status":"on-hold",
             "payment_method": "${payment_method}",
             "payment_method_title": "${payment_method_title}",
-            "set_paid": true,
+            "set_paid": false,
             "billing": {
-            "first_name": "${first_name}",
-            "last_name": "${last_name}",
+            "first_name": "${user.username}",
+            "last_name": "",
             "company": "",
             "address_1": "${address_1}",
             "address_2": "",
-            "city": "${city}",
-            "state": "${state}",
-            "postcode": "${postcode}",
-            "country": "${country}",
-            "email": "${email}",
+            "city": "",
+            "state": "",
+            "postcode": "",
+            "country": "PK",
+            "email": "${user.email}",
             "phone": "${phone}"
             },
             "shipping": {
-            "first_name": "${first_name}",
-            "last_name": "${last_name}",
+            "first_name": "${user.username}",
+            "last_name": "",
             "company": "",
             "address_1": "${address_1}",
             "address_2": "",
-            "city": "${city}",
-            "state": "${state}",
-            "postcode": "${postcode}",
-            "country": "${country}"
+            "city": "",
+            "state": "",
+            "postcode": "",
+            "country": "PK"
             },
             "line_items": [${itemdetails}],
             "shipping_lines": [
               {
                 "method_id": "flat_rate",
                 "method_title": "Flat Rate",
-                "total": "10"
+                "total": "100"
               }
             ]
           }`;
@@ -267,7 +272,7 @@ class Checkout extends Component {
             //     },`
         })
 
-        //console.log('empty--cart---',itemd);
+        console.log('empty--cart---',cart);
 
         //console.log('cart---',cart.paymentmethod);
         // cart.paymentmethod ? cart.paymentmethod.map((item) =>{
@@ -279,11 +284,11 @@ class Checkout extends Component {
 
              this.setState({
                 itemdetails : itemd,
-                payment_method : cart.paymentmethod.split(',')[0],
-                payment_method_title : cart.paymentmethod.split(',')[1],
+                payment_method : cart.paymentmethod,
+                payment_method_title : cart.paymentmethod_title,
             })
 
-        this.setState({  itemupdated : false })
+        this.setState({  itemupdated : false , user : cart.user})
 
                 //console.log('cart---',cart.paymentmethod ,this.state.itemdetails);
     }
@@ -315,35 +320,35 @@ render(){
         </CartContext.Consumer>
 
         <View style = {styles.container}>
-            <TextInput style = {styles.input}
+            {/* <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
                placeholder = "Email"
                autoCapitalize = "none"
-               onChangeText = {this.handleEmail}/>
+               onChangeText = {this.handleEmail}/> */}
             
-        <TextInput style = {styles.input}
+        {/* <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
                placeholder = "firstname"
                autoCapitalize = "none"
-               onChangeText = {this.handleFirst_name}/>
-     <TextInput style = {styles.input}
+               onChangeText = {this.handleFirst_name}/> */}
+     {/* <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
                placeholder = "lastname"
                autoCapitalize = "none"
-               onChangeText = {this.handleLast_name}/>    
+               onChangeText = {this.handleLast_name}/>     */}
 
-        <TextInput style = {styles.input}
+        {/* <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
                placeholder = "username"
                autoCapitalize = "none"
-               onChangeText = {this.handleUsername}/>
+               onChangeText = {this.handleUsername}/> */}
 
-            <TextInput style = {styles.input}
+            {/* <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
                placeholder = "Password"
                secureTextEntry={true}
                autoCapitalize = "none"
-               onChangeText = {this.handlePassword}/>
+               onChangeText = {this.handlePassword}/> */}
             
 
                <TextInput style = {styles.input}
@@ -352,29 +357,29 @@ render(){
                autoCapitalize = "none"
                onChangeText = {this.handleAddress_1}/>
                
-               <TextInput style = {styles.input}
+               {/* <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
                placeholder = "City"
                autoCapitalize = "none"
-               onChangeText = {this.handleCity}/>
+               onChangeText = {this.handleCity}/> */}
                
-               <TextInput style = {styles.input}
+               {/* <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
                placeholder = "State"
                autoCapitalize = "none"
-               onChangeText = {this.handleState}/>
+               onChangeText = {this.handleState}/> */}
 
-               <TextInput style = {styles.input}
+               {/* <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
                placeholder = "PostCode"
                autoCapitalize = "none"
-               onChangeText = {this.handlePostcode}/>
+               onChangeText = {this.handlePostcode}/> */}
 
-               <TextInput style = {styles.input}
+               {/* <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
                placeholder = "Country"
                autoCapitalize = "none"
-               onChangeText = {this.handleCountry}/>
+               onChangeText = {this.handleCountry}/> */}
 
                <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
@@ -385,8 +390,10 @@ render(){
 
                
 
-               <Button title="Submit" onPress={()=>{this.postOrder(this.props) }}></Button>
-            
+               {/* <Button title="Submit" onPress={()=>{this.postOrder(this.props) }}></Button> */}
+               <TouchableOpacity style={styles.button} onPress={()=>{this.postOrder(this.props) }}  >
+                    <Text style={{ color: '#fff', fontSize:20 }}> PROCEED </Text>
+                </TouchableOpacity>
          </View>
          </ScrollView>
          </KeyboardAvoidingView>
@@ -408,6 +415,18 @@ const styles = StyleSheet.create({
        borderColor: 'gray',
        borderWidth: 1,
        padding:10,
+    },
+    button: {
+        alignItems: 'center',
+        backgroundColor: designVars.primary_color,
+        // padding: 10,
+        width: screenWidth,
+        height: 40,
+        // marginLeft: 20,
+        // borderBottomLeftRadius: 17,
+        // borderBottomRightRadius: 17,
+        // borderTopLeftRadius: 17,
+        // borderTopRightRadius: 17,
     },
     submitButton: {
        backgroundColor: 'blue',

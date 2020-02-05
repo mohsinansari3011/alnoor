@@ -44,14 +44,23 @@ class Homeslider extends Component {
 
 
   fetchsliderImages = () => {
-  const url = `${WooApi.url.wp}posts?filter[category_name]=app-main-slider`;
-  //console.log(url);
-  axios.get(url)
+  const url = `${WooApi.url.wp}posts?filter[category_name]=app-main-slider?q=123`;
+
+  const axiosConfig = {
+    headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': `Basic ${WooApi.auth.base64}`,
+        "Access-Control-Allow-Origin": "*",
+    }
+  };
+
+  console.log('slider',url);
+  axios.get(url,axiosConfig)
   .then(response => {
     this.setState({ sliderImages: response.data })
     this.generateSliderImages(); 
   })
-  .catch(error => console.log('error',error));
+  .catch(error => console.log('slider error',error));
   }
 
 getslider(){

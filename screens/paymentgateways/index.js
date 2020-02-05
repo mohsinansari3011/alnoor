@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ScrollView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { Button, ScrollView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity,Dimensions } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { RadioButton } from 'react-native-paper';
 
@@ -7,6 +7,8 @@ import axios from 'axios';
 import WooApi from '../../components/config/wooapi';  
 import { CartContext } from '../../context/CartContext';
 
+import designVars from '../../components/config/design_variables';  
+const { width: screenWidth } = Dimensions.get('window')
 
 export default class Paymentgateways extends React.Component {
   static navigationOptions = {
@@ -95,8 +97,22 @@ render() {
              
 
             <View style={{ marginTop: 20 , marginBottom: 10 }} >
-                <Text>Total Amount ----  Rs {subtotal} </Text>
-                <Button title="CONTINUE" onPress={()=>{this.props.navigation.navigate("Checkout") }}></Button>
+            <View style={{ marginTop: 5, width: screenWidth }} >
+              {/* <View style={styles.totalContainer} >
+               <Text style={styles.totalText}>Subtotal : Rs {subtotal}</Text>
+               
+               </View> */}
+               <View style={styles.totalContainer} >
+               
+               <Text style={styles.totalText}>Total Amount : Rs {subtotal} </Text>
+               </View>
+            </View> 
+            
+
+                {/* <Button title="CONTINUE" onPress={()=>{this.props.navigation.navigate("Checkout") }}></Button> */}
+                <TouchableOpacity style={styles.button} onPress={()=>{this.props.navigation.navigate("Checkout") }}  >
+                    <Text style={{ color: '#fff', fontSize:20 }}> CONTINUE </Text>
+                </TouchableOpacity>
             </View>  
             </View>
           )
@@ -127,6 +143,18 @@ const styles = StyleSheet.create({
        borderWidth: 1,
        padding:10,
     },
+    button: {
+      alignItems: 'center',
+      backgroundColor: designVars.primary_color,
+      // padding: 10,
+      width: screenWidth,
+      height: 40,
+      marginLeft: 20,
+      // borderBottomLeftRadius: 17,
+      // borderBottomRightRadius: 17,
+      // borderTopLeftRadius: 17,
+      // borderTopRightRadius: 17,
+  },
     submitButton: {
        backgroundColor: 'blue',
        padding: 10,

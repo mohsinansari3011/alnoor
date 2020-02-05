@@ -49,6 +49,7 @@ import Homesreen from '../alnoor/screens/homescreen';
 import { CartContext } from '../alnoor/context/CartContext';
 import axios from 'axios';
 import WooApi from '../alnoor/components/config/wooapi';  
+import designVars from '../alnoor/components/config/design_variables';  
 
 
 class App extends Component {
@@ -56,10 +57,11 @@ class App extends Component {
 
   state = {
     items: [],
-    paymentmethod:'',
+    paymentmethod : 'cod',
+    paymentmethod_title : 'Cash on Delivery',
     customerinfo: [],
-    userData : []
-    //paymentmethod_title:'',
+    userData : [],
+    user : [],
   };
 
   addPayM = (item) =>{
@@ -109,7 +111,9 @@ class App extends Component {
               console.log('11====',userDataR);
 
               this.setState({
-                userData : userDataR
+                userData : userDataR,
+                user : userDataR,
+
               })
 
               
@@ -142,7 +146,8 @@ class App extends Component {
       AsyncStorage.removeItem('userData').then(response => {
           console.log('removeItem',response);
           this.setState({
-            userData : {}
+            userData : {},
+            user : [],
           })
       }).catch(error => console.log('removeItem  AsyncStorage',error));
     } catch (error) {
@@ -172,7 +177,8 @@ class App extends Component {
           ToastAndroid.show(`${userData.username} has been registerd...`, ToastAndroid.SHORT);
 
           this.setState({
-            userData : userData
+            userData : userData,
+            user : userData
           })
 
 
@@ -249,7 +255,8 @@ class App extends Component {
           // console.log('userid get response----', userData.email); 
 
           this.setState({
-            userData
+            userData ,
+            user :userData,
           })
           ToastAndroid.show(`${userData.username} has been already logged...`, ToastAndroid.SHORT);
             //this.props.navigate.navigate("Dashboard")
@@ -261,7 +268,8 @@ class App extends Component {
 
       }).catch(error => { console.log('errorget  AsyncStorage',error)
       this.setState({
-        userData : {}
+        userData : {},
+        user : [],
       })
     });
 
@@ -278,7 +286,8 @@ class App extends Component {
     value={{
       items: this.state.items,
       paymentmethod:this.state.paymentmethod,
-      //paymentmethod_title:this.state.paymentmethod_title,
+      user : this.state.user,
+      paymentmethod_title:this.state.paymentmethod_title,
       addItem: this.onAddItem,
       removeItem: this.onRemoveItem,
       addPayM: this.addPayM,
@@ -318,7 +327,7 @@ class DashboardScreen extends Component {
       <View style={{marginTop:5}}>
       <View >
         <Text style={{ textAlign: 'center',}}>Latest Products</Text></View>
-        {/* <Button color="#05a5d1" title="View More" onPress={() => this.props.navigation.navigate("Products")} /> */}
+        {/* <Button color={designVars.primary_color} title="View More" onPress={() => this.props.navigation.navigate("Products")} /> */}
       </View>
       <LatestProduct navigation = {this.props.navigation}/>
       <View style={{marginBottom:10, marginTop:5}}>
@@ -349,7 +358,7 @@ class Settings extends Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>This is Settings Page </Text>
-        <Button color="#05a5d1" title="Dashboard" onPress={() => this.props.navigation.navigate("Dashboard")} />
+        <Button color={designVars.primary_color} title="Dashboard" onPress={() => this.props.navigation.navigate("Dashboard")} />
       </View>
     );
   }
@@ -361,7 +370,7 @@ class Profile extends Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>This is Profile Page</Text>
-        <Button color="#05a5d1" title="Dashboard" onPress={() => this.props.navigation.navigate("Dashboard")} />
+        <Button color={designVars.primary_color} title="Dashboard" onPress={() => this.props.navigation.navigate("Dashboard")} />
       </View>
     );
   }
@@ -423,8 +432,7 @@ const RegisterStackNavigator = createStackNavigator({
   initialRouteName: "Register"
 })
 
-const DashboardStackNavigator = createStackNavigator(
-  {
+const DashboardStackNavigator = createStackNavigator({
     Dashboard : DashboardScreen,
     Products: {
       screen : ProductList
