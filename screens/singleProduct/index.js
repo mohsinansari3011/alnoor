@@ -14,6 +14,7 @@ export default class SingleProduct extends React.Component {
     constructor(props) {
         super(props);
         const product = props.navigation.state.params.product;
+        console.log('single product',product.categories[0].slug);
         this.state = {
             currentItem: {
                 id: product.id,

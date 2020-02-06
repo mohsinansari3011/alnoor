@@ -115,7 +115,17 @@ export default class Signup extends Component {
           }
 
           
+          LogoutUser =() => {
 
+            try {
+              AsyncStorage.removeItem('userData').then(response => {
+                  console.log('removeItem',response);
+              }).catch(error => console.log('removeItem  AsyncStorage',error));
+            } catch (error) {
+            }
+            
+        
+          }
 
     render() {
       return (
@@ -150,7 +160,8 @@ export default class Signup extends Component {
 
 
                <Button title="Submit" onPress={this.postRegister }></Button>
-               <Button title="GetUser---Submit" onPress={this.getUser }></Button>
+               <Button title="User Information" onPress={this.getUser }></Button>
+               <Button title="Logout" onPress={this.LogoutUser }></Button>
                </View>
 
                </ScrollView>

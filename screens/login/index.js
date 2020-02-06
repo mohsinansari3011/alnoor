@@ -1,14 +1,12 @@
 import React , {Component} from 'react'
 //import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
-import { TextInput, KeyboardAvoidingView,  Button, ScrollView, View, ToastAndroid, StyleSheet, 
-    FlatList, Image, TouchableOpacity , AsyncStorage  } from 'react-native';
+import { TextInput, KeyboardAvoidingView,  Button, ScrollView, View, Dimensions, StyleSheet, 
+    FlatList, Image, TouchableOpacity , Text  } from 'react-native';
 
 import { CartContext } from '../../context/CartContext';
 import { Header } from 'react-navigation-stack';
-
-
-
-
+const { width: screenWidth } = Dimensions.get('window')
+import designVars from '../../components/config/design_variables';  
 
 
 
@@ -20,7 +18,8 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     
-
+    //const route = props.navigation.state.params.route;
+    console.log('Login route', props);
   }
 
   state = {
@@ -144,7 +143,10 @@ export default class Login extends Component {
                  <CartContext>
                  {cart=>{
                    
-                   return <Button title="Login" onPress={() => cart.LoginUser(this.state.username,this.state.password)}></Button>
+                   return  <TouchableOpacity style={styles.button} onPress={() => cart.LoginUser(this.state.username,this.state.password,this.props)}  >
+                   <Text style={{ color: '#fff', fontSize:20 }}> Login </Text>
+               </TouchableOpacity>
+              
                  }}
                  </CartContext>
                
@@ -175,5 +177,18 @@ export default class Login extends Component {
     },
     submitButtonText:{
        color: 'white'
-    }
+    },
+    button: {
+      alignItems: 'center',
+      backgroundColor: designVars.primary_color,
+      // padding: 10,
+      width: screenWidth,
+      height: 70,
+      justifyContent: 'center',
+      // marginLeft: 20,
+      // borderBottomLeftRadius: 17,
+      // borderBottomRightRadius: 17,
+      // borderTopLeftRadius: 17,
+      // borderTopRightRadius: 17,
+    },
  })

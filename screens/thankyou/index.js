@@ -1,8 +1,16 @@
 import React from 'react';
-import { Button, ScrollView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { Button, ScrollView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity ,Dimensions} from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
 import { CartContext } from '../../context/CartContext';
+
+const { width: screenWidth } = Dimensions.get('window')
+import designVars from '../../components/config/design_variables';  
+
+import {
+  NavigationActions , StackActions
+} from 'react-navigation';
+
 
 export default class Thankyou extends React.Component {
   static navigationOptions = {
@@ -12,7 +20,7 @@ export default class Thankyou extends React.Component {
   constructor(props) {
     super(props);
     //const Categoryid = props.navigation.state.params.Categoryid;
-    console.log('---myprops',props.navigation.state.params.data.first_name);
+    //console.log('---myprops',props.navigation.state.params.data.first_name);
     // state = {
     //   userinfo : props.navigation.state.params.data
     // }
@@ -20,11 +28,20 @@ export default class Thankyou extends React.Component {
 }
   
 
+render_dashboad(){
+  const resetAction = StackActions.reset({
+    index: 0,
+    actions: [NavigationActions.navigate({routeName: 'Cart'})],
+    key: null,
+  });
+  this.props.navigation.dispatch(resetAction);
+
+}
 render() {
 
   const userinfo = this.props.navigation.state.params.data;
 
- // console.log(this.state.userinfo)
+  console.log('userinfo',userinfo)
  //this.props.navigation.navigate("Dashboard")
 
   return (
@@ -38,41 +55,32 @@ render() {
                 return subtotal += (parseFloat(item.price) * parseFloat(item.quantity))
             })
             
-          const Items = <FlatList contentContainerStyle={styles.list}
-            data={cart.items}
-            keyExtractor={ item => item.id.toString() }
-            renderItem={({ item }) =>
-              <View style={styles.lineItem} >
-                <Image style={styles.image} source={{ uri: item.image }} />
-                <Text style={styles.text}>{item.name}</Text>
-                <Text style={styles.text}>{`\n`}{item.quantity} x Rs{item.price}</Text>
-                
-              </View>
-            }
-          />;
           return (
             <View style={styles.container}>
-            <View style={{ marginTop: 30 }} ><Text style={styles.text}>Subtotal : Rs {subtotal}</Text></View> 
+            
              
-            <ScrollView>{Items}</ScrollView>
-
-            <Text>{userinfo.first_name}</Text>
-            <Text>{userinfo.last_name}</Text>
-            <Text>{userinfo.email}</Text>
+           
 
 
             <View style={{ marginTop: 20 , marginBottom: 10 }} >
-                <Text>Total Amount ----  Rs {subtotal} </Text>
-                <Text>Alnoor-{Math.round(Math.random() * 1000)} Your Order has been completed Successfully </Text>
+
+                <Text> USERNAME : {userinfo.user.username}</Text>
+                <Text> EMAIL:     {userinfo.user.email}</Text>
+                <Text>Total Amount : Rs {subtotal} </Text>
+                <Text style={{color: designVars.primary_color}}>Your Order has been completed Successfully </Text>
                 
-                <Button title="Proceed to Dashboard" onPress={()=>{  this.props.navigation.dismiss() }}></Button>
+                <TouchableOpacity style={styles.button} onPress={() => cart.nullcart(this.props)} >
+                   <Text style={{ color: '#fff', fontSize:20 }}> Proceed to Dashboard </Text>
+               </TouchableOpacity>
+
+                
             </View>  
             </View>
           )
         } else {
           return (
             <View style={styles.container}>
-              <Text>Cart is empty!</Text>
+            <Text>Alnoor-{Math.round(Math.random() * 1000)}  Your Order has been completed Successfully </Text>
             </View>
           )
         }
@@ -103,5 +111,18 @@ container: {
 text: {
   fontSize: 20,
   padding: 5
-}
+},
+button: {
+  alignItems: 'center',
+  backgroundColor: designVars.primary_color,
+  // padding: 10,
+  width: screenWidth,
+  height: 70,
+  justifyContent: 'center',
+  // marginLeft: 20,
+  // borderBottomLeftRadius: 17,
+  // borderBottomRightRadius: 17,
+  // borderTopLeftRadius: 17,
+  // borderTopRightRadius: 17,
+},
 });

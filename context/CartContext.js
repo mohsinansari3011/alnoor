@@ -13,4 +13,5 @@ export const CartContext = React.createContext({
     LoginUser: () => {},
     LogoutUser: () => {},
     SignupUser : () =>{},
+    nullcart : () =>{},
 });

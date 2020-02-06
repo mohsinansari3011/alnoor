@@ -40,7 +40,7 @@ console.log('redirect ----',isUser);
 if(isUser){
   this.props.navigation.navigate("Checkout");
 }else{
-  this.props.navigation.navigate("Login")
+  this.props.navigation.navigate("Login", { route: "Checkout" })
 }
 
 }

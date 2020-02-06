@@ -10,10 +10,11 @@ import {
   createAppContainer,
   createDrawerNavigator,
   createBottomTabNavigator,
-  createStackNavigator
+  createStackNavigator,
+
+  NavigationActions, StackActions
+
 } from 'react-navigation';
-
-
 
 //import { Input } from 'react-native-elements';
 //import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
@@ -54,15 +55,20 @@ import designVars from '../alnoor/components/config/design_variables';
 
 class App extends Component {
 
-
-  state = {
-    items: [],
-    paymentmethod : 'cod',
-    paymentmethod_title : 'Cash on Delivery',
-    customerinfo: [],
-    userData : [],
-    user : [],
-  };
+  // constructor(props) {
+  //   super(props);
+  //   console.log('app.js----------',this.props.navigation);
+  // }
+ state = {
+  items: [],
+  paymentmethod : 'cod',
+  paymentmethod_title : 'Cash on Delivery',
+  customerinfo: [],
+  userData : [],
+  user : [],
+  route : '',
+  navigation : [],
+};
 
   addPayM = (item) =>{
     this.setState({
@@ -70,9 +76,24 @@ class App extends Component {
     })
   }
 
-  LoginUser = (username,password) =>{
+  nullcart = (props) =>{
+    this.setState({
+        items: [],
+    });
+
+    //props.navigation.navigate('Dashboard');
+
+      const resetAction = StackActions.reset({
+        index: 0,
+        key: null, // <-- this
+        actions: [NavigationActions.navigate({ routeName: "Cart" })]
+    })
+    props.navigation.dispatch(resetAction)
+
+  }
+
+  LoginUser = (username,password,props) =>{
    
-    //const Userurl = `${WooApi.url.wp}users/12`;
     const url = `${WooApi.url.wplogin}?username=${username}&password=${password}`;
     const axiosConfig = {
         headers: {
@@ -87,10 +108,6 @@ class App extends Component {
     .then(response => {
       let loginData = response.data;
        try {
-
-
-       // console.log('Login id',loginData.ID);
-
         if(loginData.ID != undefined){
 
           let userDataR = {
@@ -108,17 +125,19 @@ class App extends Component {
             AsyncStorage.setItem('userData', JSON.stringify(userDataR)).then(response => {
               ToastAndroid.show(`${userDataR.username} has been Loggedin!!...`, ToastAndroid.SHORT);
               
-              console.log('11====',userDataR);
+              //console.log('11====',userDataR);
 
               this.setState({
                 userData : userDataR,
                 user : userDataR,
-
               })
 
               
-
-             
+              
+            //  if(props.navigation.state.params.route == "Checkout"){
+            //   console.log('route--Lofgin',props.navigation.state.params.route );
+            //   props.navigation.navigate("Cart")
+            //  }
               //navigate("Dashboard")
 
             }).catch(error => console.log('error AsyncStorage',error));
@@ -281,6 +300,9 @@ class App extends Component {
   }
 
 
+  
+
+
   render() {
     return (<CartContext.Provider
     value={{
@@ -294,11 +316,11 @@ class App extends Component {
       LoginUser: this.LoginUser,
       LogoutUser : this.LogoutUser,
       SignupUser : this.SignupUser,
+      nullcart : this.nullcart,
     }}
   >
     
      {this.state.userData && this.state.userData.username  != undefined ? <AppContainer1/> : <AppContainer/>}
-
   </CartContext.Provider>);
   }
 }
@@ -313,17 +335,45 @@ class DashboardScreen extends Component {
     slider : false,
     product : false,
     category : false,
+    
   }
 
 
+  fetchsliderImages = () => {
+    const url = `${WooApi.url.wp}posts?filter[category_name]=app-main-slider`;
+  
+    const axiosConfig = {
+      headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': `Basic ${WooApi.auth.base64}`,
+          "Access-Control-Allow-Origin": "*",
+      }
+    };
+  
+    //console.log('slider',url);
+    axios.get(url,axiosConfig)
+    .then(response => {
+      this.setState({ sliderImages: response.data })
+      //this.generateSliderImages(); 
+    })
+    .catch(error => console.log('slider error',error));
+    }
+
+
+
+    
 
   render() {
+
+    //console.log('this.state.sliderImages', this.state.sliderImages);
     return (
       this.state.loader ?   <View style={{textAlign:'center'}}>
       <Image source={ require('./assets/images/cart-loading.gif') }/>
       </View> :  <ScrollView>
   
-      <Homeslider />
+      <Homeslider /> 
+
+
       <View style={{marginTop:5}}>
       <View >
         <Text style={{ textAlign: 'center',}}>Latest Products</Text></View>
@@ -375,6 +425,27 @@ class Profile extends Component {
     );
   }
 }
+
+
+class NavigationDrawerStructure extends Component {
+  // toggleDrawer = () => {
+  //   this.props.navigationProps.toggleDrawer();
+  // };
+  render() {
+    return (
+      <TouchableOpacity style={{ padding: 15, color: 'black' }}
+        onPress={() => { this.props.navigation.navigate('Cart') }}
+      >
+      <Icon
+      style={{ paddingRight: 10 }}
+      name={Platform.OS === 'ios' ? `ios-cart` : 'md-cart'}
+      size={30}
+    />
+      </TouchableOpacity>
+    );
+  }
+}
+
 
 
 // const DashboardTabNavigator = createBottomTabNavigator(
@@ -452,7 +523,6 @@ const DashboardStackNavigator = createStackNavigator({
     // },
     
   },
-  
   {
     defaultNavigationOptions: ({ navigation,props }) => {
      return{
@@ -532,6 +602,9 @@ const AppDrawerNavigator1 = createDrawerNavigator({
     screen: Profile
   },
   Settings: {
+    screen: Settings
+  },
+  Orders: {
     screen: Settings
   },
   Cart : CartStackNavigator,
