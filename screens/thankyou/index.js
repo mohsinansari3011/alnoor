@@ -31,7 +31,7 @@ export default class Thankyou extends React.Component {
 render_dashboad(){
   const resetAction = StackActions.reset({
     index: 0,
-    actions: [NavigationActions.navigate({routeName: 'Cart'})],
+    actions: [NavigationActions.navigate({routeName: 'Dashboard'})],
     key: null,
   });
   this.props.navigation.dispatch(resetAction);
@@ -67,7 +67,7 @@ render() {
                 <Text> USERNAME : {userinfo.user.username}</Text>
                 <Text> EMAIL:     {userinfo.user.email}</Text>
                 <Text>Total Amount : Rs {subtotal} </Text>
-                <Text style={{color: designVars.primary_color}}>Your Order has been completed Successfully </Text>
+                <Text style={{color: designVars.primary_color}}>Thank You!! Your Order has been Received Successfully!</Text>
                 
                 <TouchableOpacity style={styles.button} onPress={() => cart.nullcart(this.props)} >
                    <Text style={{ color: '#fff', fontSize:20 }}> Proceed to Dashboard </Text>

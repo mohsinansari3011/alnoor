@@ -9,6 +9,7 @@ import axios from 'axios';
 import WooApi from '../../components/config/wooapi';  
 import { CartContext } from '../../context/CartContext';
 import { Header } from 'react-navigation-stack';
+import CartIcon from '../order';
 
 
 
@@ -48,6 +49,12 @@ export default class Signup extends Component {
           //const { navigate } = this.props.navigation;
 
           try {
+
+            AsyncStorage.getItem("cart_count").then((value) => {
+             console.log('cart_count',value);
+            
+          })
+
             AsyncStorage.getItem('userData').then(response => {
 
               if(response != null){
